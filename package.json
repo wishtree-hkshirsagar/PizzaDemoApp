@@ -1,0 +1,19 @@
+{
+  "name": "pizza-demo-app",
+  "version": "1.0.0",
+  "description": "This is a demo app",
+  
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server.js"
+  },
+  "author": "Demo App",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-hbs": "^2.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
