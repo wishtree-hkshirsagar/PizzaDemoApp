@@ -10,27 +10,27 @@
 
 @font-face{
     font-family: 'Raleway-regular';
-    src: url('/resources/fonts/Raleway-Regular.ttf');
+    src: url('/fonts/Raleway-Regular.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-medium';
-    src: url('/resources/fonts/Raleway-Medium.ttf');
+    src: url('/fonts/Raleway-Medium.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-bold';
-    src: url('/resources/fonts/Raleway-Bold.ttf');
+    src: url('/fonts/Raleway-Bold.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-semibold';
-    src: url('/resources/fonts/Raleway-SemiBold.ttf');
+    src: url('/fonts/Raleway-SemiBold.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-black';
-    src: url('/resources/fonts/Raleway-Black.ttf');
+    src: url('/fonts/Raleway-Black.ttf');
 }
 
 /* colors */
