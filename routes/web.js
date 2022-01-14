@@ -7,6 +7,10 @@ function initRoutes(app) {
 
     app.get('/', homeController().index);
 
+    app.get('/login', homeController().loginPage);
+
+    app.get('/register', homeController().registerPage);
+
     app.post('/login', authController().login);
 
     app.post('/register', authController().register);
