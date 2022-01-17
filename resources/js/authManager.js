@@ -14,15 +14,36 @@ authenticationManager.getCurrentRoute = function(){
 };
 
 authenticationManager.on('start', function(){
+
     if (Backbone.history) {
         Backbone.history.start({pushState: true});
     }
+
+    $('.login').click(function(ev){
+        console.log('login');
+        ev.preventDefault();
+        authenticationManager.vent.trigger('login:page');
+    });
+
+    $('.signup').click(function(ev){
+        console.log('signup');
+        ev.preventDefault();
+        authenticationManager.vent.trigger('signup:page');
+    });
+
+    $('.resetPassword').click(function(ev){
+        console.log('forgot');
+        ev.preventDefault();
+        authenticationManager.vent.trigger('forgot:page');
+    });
+
 });
 
 // Router
 authenticationManager.module('authenticationApp', function(authenticationApp, authenticationManager, backbone, marionette, $, _){
     authenticationApp.Router = marionette.AppRouter.extend({
         appRoutes: {
+
             'login': 'loginView',
             'register': 'registerView',
             'forgotPassword': 'forgotPasswordView'
@@ -31,6 +52,7 @@ authenticationManager.module('authenticationApp', function(authenticationApp, au
 
     var API = {
 
+       
         loginView: function(){
             console.log('login');
             authenticationManager.authenticationApp.entityController.controller.showLogin();
@@ -41,8 +63,24 @@ authenticationManager.module('authenticationApp', function(authenticationApp, au
         },
         forgotPasswordView: function(){
             console.log('forgot password');
+            authenticationManager.authenticationApp.entityController.controller.showForgotPassword();
         }
     };
+
+    authenticationManager.vent.on('login:page', function(){
+        authenticationManager.navigate('login');
+        API.loginView();
+    });
+
+    authenticationManager.vent.on('signup:page', function(){
+        authenticationManager.navigate('register');
+        API.registerView();
+    });
+
+    authenticationManager.vent.on('forgot:page', function(){
+        authenticationManager.navigate('forgotPassword');
+        API.forgotPasswordView();
+    });
 
     authenticationManager.addInitializer(function(){
         new authenticationApp.Router({ controller: API });
@@ -56,7 +94,18 @@ authenticationManager.module('authenticationApp.entityController', function (ent
         showLogin: function() {
             console.log('login controller');
             var loginView = new authenticationManager.authenticationApp.entityViews.loginView();
-            loginView.on('show', function(){ 
+            loginView.on('show', function(){
+                
+                loginView.$('#togglePassword').on('click', function(){
+                    const type = $('.inputPassword').attr('type') === 'password' ? 'text' : 'password';
+                    loginView.$('.inputPassword').attr('type', type);
+                    if(type == 'password'){
+                        loginView.$('.passwordIcon').css({'background-image': 'url(/icons/hidden.png)'});
+                    } else if(type == 'text'){
+                        loginView.$('.passwordIcon').css({'background-image': 'url(/icons/view.png)'})
+                    }
+                });
+                
                 loginView.$('.inputEmail').on('focus', function(){
                     loginView.$('.inputFieldEmail').addClass('focus');
                     loginView.$('.inputFieldEmail').removeClass('error');
@@ -90,7 +139,11 @@ authenticationManager.module('authenticationApp.entityController', function (ent
                 registerView.$('#togglePassword').on('click', function(){
                     const type = $('.inputPassword').attr('type') === 'password' ? 'text' : 'password';
                     registerView.$('.inputPassword').attr('type', type);
-                    this.classList.toggle("bi-eye");
+                    if(type == 'password'){
+                        registerView.$('.passwordIcon').css({'background-image': 'url(/icons/hidden.png)'});
+                    } else if(type == 'text'){
+                        registerView.$('.passwordIcon').css({'background-image': 'url(/icons/view.png)'})
+                    }
                 });
 
                 registerView.$('.inputName').on('focus', function(){
@@ -144,6 +197,205 @@ authenticationManager.module('authenticationApp.entityController', function (ent
                 });
             });
             authenticationManager.contentRegion.show(registerView);
+        },
+        showForgotPassword: function(){
+            console.log('forgot password controller');
+            var forgotPasswordView = new authenticationManager.authenticationApp.entityViews.forgotPasswordView();
+            forgotPasswordView.on('show', function(){
+
+                forgotPasswordView.$('#togglePassword').on('click', function(){
+                    const type = $('.inputPassword').attr('type') === 'password' ? 'text' : 'password';
+                    forgotPasswordView.$('.inputPassword').attr('type', type);
+                    if(type == 'password'){
+                        forgotPasswordView.$('.passwordIcon').css({'background-image': 'url(/icons/hidden.png)'});
+                    } else if(type == 'text'){
+                        forgotPasswordView.$('.passwordIcon').css({'background-image': 'url(/icons/view.png)'})
+                    }
+                });
+
+                forgotPasswordView.$('.inputEmail').on('focus', function(){
+                    forgotPasswordView.$('.inputFieldEmail').addClass('focus');
+                    forgotPasswordView.$('.inputFieldEmail').removeClass('error');
+                    forgotPasswordView.$('.emailError .formError').text('');
+                });
+
+                forgotPasswordView.$('.inputEmail').on('blur', function(){
+                    forgotPasswordView.$('.inputFieldEmail').removeClass('focus');
+                });
+
+                forgotPasswordView.$('.inputOtp').on('focus', function(){
+                    forgotPasswordView.$('.inputFieldOtp').addClass('focus');
+                    forgotPasswordView.$('.inputFieldOtp').removeClass('error');
+                    forgotPasswordView.$('.otpError .formError').text('');
+                });
+
+                forgotPasswordView.$('.inputOtp').on('blur', function(){
+                    forgotPasswordView.$('.inputFieldOtp').removeClass('focus');
+                });
+
+                forgotPasswordView.$('.inputPassword').on('focus', function(){
+                    forgotPasswordView.$('.inputFieldPassword').addClass('focus');
+                    forgotPasswordView.$('.inputFieldPassword').removeClass('error');
+                    forgotPasswordView.$('.passwordError .formError').text('');
+                });
+
+                forgotPasswordView.$('.inputPassword').on('blur', function(){
+                    forgotPasswordView.$('.inputFieldPassword').removeClass('focus');
+                });
+
+                forgotPasswordView.$('.inputConfirmPassword').on('focus', function(){
+                    forgotPasswordView.$('.inputFieldConfirmPassword').addClass('focus');
+                    forgotPasswordView.$('.inputFieldConfirmPassword').removeClass('error');
+                    forgotPasswordView.$('.confirmPasswordError .formError').text('');
+                });
+
+                forgotPasswordView.$('.inputConfirmPassword').on('blur', function(){
+                    forgotPasswordView.$('.inputFieldConfirmPassword').removeClass('focus');
+                });
+                let email = null;
+                forgotPasswordView.$('.btnForgot').on('click', function(ev) {
+                    console.log('btnForgot');
+                    ev.preventDefault();
+                    if(!$('.inputEmail').val()){
+                        $('.inputFieldEmail').addClass('error');
+                        $('.emailError .formError').text('Please enter an email address').css({'margin-left': '-135px'});
+                        return;
+                    }
+
+                    let emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    email = $('.inputEmail').val();
+                    if(!emailRegex.test(email)){
+                        $('.inputFieldEmail').addClass('error');
+                        $('.emailError .formError').text('Please enter a valid email address').css({'margin-left': '-105px'});
+                        return;
+                    }
+
+                    let value = {
+                        email: $('.inputEmail').val()
+                    }
+
+                    $.ajax({
+                        url: '/v1/api/sendEmail',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(value),
+                        success: function(){
+                            swal({
+                                title: "Success!",
+                                text: `Otp has been sent to ${$('.inputEmail').val()}`,
+                                type: "success",
+                                icon: "success"
+                             });
+                           $('.otpForm').addClass('hide');
+                           $('.resetForm').removeClass('hide');
+                        }, 
+                        error: function(response){
+                            console.log(response)
+                            $('.inputFieldEmail').addClass('error');
+                            $('.inputFieldPassword').addClass('error');
+        
+                            swal({
+                                title: "Error!",
+                                text: response.responseJSON.message,
+                                type: "error",
+                                icon: "error"
+                             });
+                            
+                        }
+                    })
+                });
+
+                forgotPasswordView.$('.btnReset').on('click', function(ev) {
+                    ev.preventDefault();
+            
+                    if(!$('.inputOtp').val() && !$('.inputPassword').val() && !$('.inputConfirmPassword').val()){
+                        
+                        $('.inputFieldOtp').addClass('error');
+                        $('.otpError .formError').text('Please enter otp').css({'margin-left': '-186px'});
+                        $('.inputFieldPassword').addClass('error');
+                        $('.passwordError .formError').text('Please enter a password').css({'margin-left': '-175px'});
+                        $('.inputFieldConfirmPassword').addClass('error');
+                        $('.confirmPasswordError .formError').text('Confirm password can not be empty').css({'margin-left': '-85px'});
+                        return;
+                    }
+
+                    if(!$('.inputOtp').val()){
+                        
+                        $('.inputFieldOtp').addClass('error');
+                        $('.otpError .formError').text('Please enter otp').css({'margin-left': '-186px'});
+                        return;
+                    }
+
+                    let otpRegex = /^([0-9]{4})+$/;
+                    let otp = $('.inputOtp').val();
+                    if(!otpRegex.test(otp)){
+                        $('.otpError .formError').text('OTP must be of 4 digits:').show();
+                        $('.inputFieldOtp').addClass('error');
+                        return;
+                    }
+
+                    if(!$('.inputPassword').val()){
+                        $('.inputFieldPassword').addClass('error');
+                        $('.passwordError .formError').text('Please enter a password').css({'margin-left': '-175px'});
+                        return;
+                    }
+                    
+                    if(!$('.inputConfirmPassword').val()){
+                        $('.inputFieldConfirmPassword').addClass('error');
+                        $('.confirmPasswordError .formError').text('Confirm password can not be empty').css({'margin-left': '-85px'});
+                        return;
+                    }
+
+                    let confirmPassword = $('.inputConfirmPassword').val();
+                    let password = $('.inputPassword').val();
+                    if(confirmPassword != password){
+                        $('.inputFieldConfirmPassword').addClass('error');
+                        $('.confirmPasswordError .formError').text('Password and Confirm Password do not match');
+                        return;
+                    }
+
+                    let value = {
+                        email: email,
+                        otp: $('.inputOtp').val(),
+                        password: $('.inputPassword').val()
+                    }
+
+                    $.ajax({
+                        url: '/v1/api/updatePassword',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(value),
+                        success: function(){
+                            swal({
+                                title: "Success!",
+                                text: "Password has been updated successfully",
+                                type: "success",
+                                icon: "success"
+                             });
+                        }, 
+                        error: function(response){
+                            console.log(response)
+                            $('.inputFieldEmail').addClass('error');
+                            $('.inputFieldPassword').addClass('error');
+        
+                            swal({
+                                title: "Error!",
+                                text: response.responseJSON.message,
+                                type: "error",
+                                icon: "error"
+                             });
+                            
+                        }
+                    })
+
+
+                });
+            });
+
+            
+            authenticationManager.contentRegion.show(forgotPasswordView);
         }
     };
 });
@@ -353,5 +605,10 @@ authenticationManager.module('authenticationApp.entityViews', function (entityVi
                 }
             })
         }
+    });
+
+    entityViews.forgotPasswordView = marionette.ItemView.extend({
+        template: 'forgotPasswordTemplate',
+        events: {}
     });
 });

@@ -19,7 +19,7 @@ function initWebRoutes(app) {
 
     // app.post('/v1/api/register', authController().register);
 
-    app.get('/forgotPassword', homeController().forgotPasswordPage);
+    app.get('/forgotPassword', guest, homeController().forgotPasswordPage);
 
     app.get('/cart', cartController().index);
 

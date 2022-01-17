@@ -124,7 +124,14 @@ function authController() {
                     let user = await User.findOne({email: req.body.email})
                     const hashedPassword = await bcrypt.hash(req.body.password, 10);
                     user.password = hashedPassword;
-                    user.save();
+                    user.save(() => {
+                       Otp.deleteOne({email: req.body.email, otp: req.body.otp}).then(() => {
+                           console.log('otp deleted');
+                       }).catch(() => {
+                            console.log('error deleting otp');
+                       })
+                       
+                    });
                     responseType.status = 'Success';
                     responseType.message = 'Password Changed Successfully!';
                     res.status(200).json(responseType);
