@@ -1,4 +1,6 @@
 const User = require('../../models/user').User;
+const Otp = require('../../models/otp').Otp;
+const Email = require('../../config/mail');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
@@ -81,6 +83,58 @@ function authController() {
 
 
             // res.status(200).json(req.body);
+        },
+       async sendEmail(req, res){
+        let data = await User.findOne({email: req.body.email});
+        const responseType = {};
+        if(data){
+            let otpcode = Math.floor((Math.random()*10000)+1);
+            console.log('otpcode', otpcode)
+            let otpData = new Otp({
+                email: req.body.email,
+                otp: otpcode,
+                expireIn: new Date().getTime() + 300*1000
+            });
+
+            Email.sendOtp(req.body.email, otpcode);
+            responseType.message = `Otp has been sent to the ${req.body.email}`
+            otpData.save(()=> {
+                res.status(200).json(responseType);
+            });
+        }else {
+            responseType.statusText = 'Error'
+            responseType.message = 'Email ID does not exist'
+            res.status(404).json(responseType);
+        }
+    },
+        async updatePassword(req, res) {
+            console.log('email', req.body.email);
+            console.log('otp', req.body.otp);
+            let data = await Otp.findOne({email: req.body.email, otp: req.body.otp});
+            console.log(data);
+            const responseType = {};
+            if(data){
+                let currentTime = new Date().getTime();
+                let diff = data.expireIn - currentTime;
+                if(diff < 0){
+                    responseType.status = 'Error';
+                    responseType.message = 'One Time Password Expired';
+                    res.status(500).json(responseType);
+                }else{
+                    let user = await User.findOne({email: req.body.email})
+                    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+                    user.password = hashedPassword;
+                    user.save();
+                    responseType.status = 'Success';
+                    responseType.message = 'Password Changed Successfully!';
+                    res.status(200).json(responseType);
+                }
+            }else{
+                console.log('error')
+                responseType.status = 'Error';
+                responseType.message = 'Invalid OTP';
+                res.status(404).json(responseType);
+            }
         }
     }
 }
