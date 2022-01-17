@@ -16,8 +16,9 @@ function authController() {
                 }
 
                 if(!user){
-                    console.log('****!user*****');
-                   return res.json({
+                    console.log('****Invalid credentials*****');
+                    // res.redirect('/login');
+                   return res.status(401).json({
                         error: info.message
                     });
                     // return res.redirect('/login');
@@ -30,8 +31,8 @@ function authController() {
                         });
                         return next(error)
                     }
-
-                    // return res.redirect('/')
+                    console.log('user', user);
+                //    return res.redirect('/')
                     return res.status(200).json({
                         success: 'Logged in successfully'
                     })
@@ -49,8 +50,9 @@ function authController() {
                 });
             }
 
-            User.find({email: email}, (err, result) => {
+            User.exists({email: email}, (err, result) => {
                 if(result) {
+                    console.log('***if***');
                     return res.status(409).json({
                         error: 'Email ID already exists'
                     });
@@ -67,17 +69,18 @@ function authController() {
             });
 
             user.save().then((user) => {
-                res.status(200).json({
+                // return res.redirect('/');
+               return res.status(200).json({
                     success: 'User registered successfully'
                 })
             }).catch((err) => {
-                res.status(500).json({
+              return res.status(500).json({
                     error: 'Something went wrong'
                 })
             });
 
 
-            res.status(200).json(req.body);
+            // res.status(200).json(req.body);
         }
     }
 }

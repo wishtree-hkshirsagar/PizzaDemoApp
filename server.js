@@ -44,6 +44,9 @@ app.use(passport.session())
 // require web routes
 require('./routes/web')(app);
 
+// require api routes
+require('./routes/api')(app);
+
 // configure the view engine
 app.engine('hbs', hbs.express4());
 
@@ -63,7 +66,5 @@ app.listen(app.get('port'), () => {
 
 // Global middleware
 app.use((req, res, next) => {
-    // res.locals.session = req.session
-    // res.locals.user = req.user
     next()
 })

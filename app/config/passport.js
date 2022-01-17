@@ -8,7 +8,7 @@ function init(passport) {
         usernameField: 'email'
     }, async (email, password, done) => {
         const user = await User.findOne({email: email});
-        console.log('***user***',user);
+        // console.log('***user***',user);
         if(!user){
             return done(null, false, { message: 'No user found'});
         }
@@ -19,7 +19,7 @@ function init(passport) {
                 return done(null, user, { message: 'Logged in successfully'});
             }
 
-            return done(null, false, { message: 'Wrong email id or password'});
+            return done(null, false, { message: 'Invalid credentials'});
 
         }).catch((err) => {
             console.log('error',err);

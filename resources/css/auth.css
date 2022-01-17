@@ -6,12 +6,18 @@
   box-sizing: border-box;
 }
 
+
 /* colors */
 
 :root {
   --primary: #FE5F1E;
   --primary-hover: #b23301;
   --danger: #FE4545;
+  --success: #008000;
+  --secondary: #444;
+  --pure: #fff;
+  --ternary: #f0f0f0;
+  --ternaryOne: #acacac;
 
 }
 
@@ -20,10 +26,39 @@ input {
   font-family: "Poppins", sans-serif;
 }
 
+.sweet-alert button:focus {
+  box-shadow: none;
+}
+
+.swal-button{
+  background-color: var(--primary) !important;
+}
+
+.swal-button:not([disabled]):hover{
+  background-color: var(--primary-hover) !important;
+}
+
+.focus{
+  border: 2px solid var(--success);
+}
+
+.disable{
+  cursor: none !important;
+  opacity: 0.5 !important;
+}
+
+.formError{
+  color: var(--danger);
+}
+
+.error{
+  border: 2px solid var(--danger);
+}
+
 .container {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--pure);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -71,14 +106,14 @@ form.signInForm {
 
 .title {
   font-size: 2.2rem;
-  color: #444;
+  color: var(--secondary);
   margin-bottom: 10px;
 }
 
 .inputField {
   max-width: 380px;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: var(--ternary);
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
@@ -91,7 +126,7 @@ form.signInForm {
 .inputField i {
   text-align: center;
   line-height: 55px;
-  color: #acacac;
+  color: var(--ternaryOne);
   transition: 0.5s;
   font-size: 1.1rem;
 }
@@ -103,14 +138,25 @@ form.signInForm {
   line-height: 1;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--secondary);
 }
 
 .inputField input::placeholder {
-  color: #aaa;
+  color: var(--ternaryOne);
   font-weight: 500;
 }
 
+.forgot{
+  margin-left: 275px;
+}
+.forgot a{
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+.forgot a:hover{
+  color: var(--primary-hover);
+}
 
 .btn {
   width: 150px;
@@ -119,7 +165,7 @@ form.signInForm {
   outline: none;
   height: 49px;
   border-radius: 49px;
-  color: #fff;
+  color: var(--pure);
   text-transform: uppercase;
   font-weight: 600;
   margin: 10px 0;
@@ -174,7 +220,7 @@ form.signInForm {
 }
 
 .panel .content {
-  color: #fff;
+  color: var(--pure);
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
 }
@@ -190,10 +236,16 @@ form.signInForm {
   padding: 0.7rem 0;
 }
 
+#togglePassword{
+  cursor: pointer;
+  margin-top: -55px;
+  margin-left: 335px;
+}
+
 .btn.transparent {
   margin: 0;
   background: none;
-  border: 2px solid #fff;
+  border: 2px solid var(--pure);
   font-size: 0.8rem;
   padding: 10px 20px;
 }

@@ -8,6 +8,9 @@ function homeController() {
         },
         registerPage(req, res) {
             res.render('public/signup');
+        },
+        forgotPasswordPage(req, res) {
+            res.render('public/forgot');
         }
     }
 }

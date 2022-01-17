@@ -1,19 +1,25 @@
 const homeController = require('../app/http/controllers/homeController');
-const authController = require('../app/http/controllers/authController');
+const mainController = require('../app/http/controllers/mainController');
 const cartController = require('../app/http/controllers/customers/cartController');
+const guest = require('../app/http/middleware/guest');
+const auth = require('../app/http/middleware/auth');
 
 
-function initRoutes(app) {
+function initWebRoutes(app) {
+    
+    app.get('/', guest, homeController().index);
 
-    app.get('/', homeController().index);
+    app.get('/home', auth, mainController().main);
 
-    app.get('/login', homeController().loginPage);
+    app.get('/login', guest, homeController().loginPage);
 
-    app.get('/register', homeController().registerPage);
+    // app.post('/v1/api/login', guest, authController().login);
 
-    app.post('/login', authController().login);
+    app.get('/register', guest, homeController().registerPage);
 
-    app.post('/register', authController().register);
+    // app.post('/v1/api/register', authController().register);
+
+    app.get('/forgotPassword', homeController().forgotPasswordPage);
 
     app.get('/cart', cartController().index);
 
@@ -21,4 +27,4 @@ function initRoutes(app) {
     
 }
 
-module.exports = initRoutes;
+module.exports = initWebRoutes;
