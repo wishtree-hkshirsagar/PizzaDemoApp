@@ -34,7 +34,7 @@ function authController() {
                         return next(error)
                     }
                     console.log('user', user);
-                //    return res.redirect('/')
+                    console.log('logged in successfully');
                     return res.status(200).json({
                         success: 'Logged in successfully'
                     })
