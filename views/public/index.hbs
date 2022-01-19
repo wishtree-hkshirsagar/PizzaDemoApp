@@ -6,27 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza Hut</title>
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
-    <header class="topbar">
-        <div class="container">
-            <div class="icons">
-                <a href="#"><img src="/icons/facebook.svg" alt="facebook"></a>
-                <a href="#"><img src="/icons/twitter.svg" alt="twitter"></a>
-                <a href="#"><img src="/icons/google.svg" alt="google"></a>
-                <a href="#"><img src="/icons/instagram.svg" alt="instagram"></a>
+    <div class="mainContent"></div>
+    <div class="header">
+        <header class="topbar">
+            <div class="container">
+                <div class="icons">
+                    <a href="#"><img src="/icons/facebook.svg" alt="facebook"></a>
+                    <a href="#"><img src="/icons/twitter.svg" alt="twitter"></a>
+                    <a href="#"><img src="/icons/google.svg" alt="google"></a>
+                    <a href="#"><img src="/icons/instagram.svg" alt="instagram"></a>
+                </div>
             </div>
-        </div>
-    </header>
-    <nav>
-        <div class="top">
-            <div class="container flex justify-between">
-                <div class="contact flex items-center">
-                    <img src="/icons/phone.svg" alt="phone">
-                    <div>
-                        <h5>Call US: (+91) 123 456 789</h5>
-                        <h6>E-mail : support@pizzahut.com</h6>
+        </header>
+        <nav>
+            <div class="top">
+                <div class="container flex justify-between">
+                    <div class="contact flex items-center">
+                        <img src="/icons/phone.svg" alt="phone">
+                        <div>
+                            <h5>Call US: (+91) 123 456 789</h5>
+                            <h6>E-mail : support@pizzahut.com</h6>
+                        </div>
                     </div>
+<<<<<<< Updated upstream
                 </div>
                 <div class="branding">
                     <img src="/icons/logo.png" alt="">
@@ -41,5 +46,52 @@
             </div>
         </div>
     </nav>
+=======
+                    <div class="branding">
+                        <a href="#" class="home"><img src="/icons/logo.png" alt=""></a>
+                    </div>
+                    <div class="time flex items-center">
+                        <img src="/icons/clock.svg" alt="clock">
+                        <div>
+                            <h5>Working Hours:</h5>
+                            <h6>Mon - Sat (8.00am - 10.00pm)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar shadow">
+                <div class="container flex justify-center">
+                    <a class="login" href="#">Log In</a>
+                    <a class="signup" href="#">Sign Up</a>
+                    <span class="icon-cart"></span>
+                </div>
+            </div>
+        </nav>
+
+        <header class="topbarOne">
+            <div class="container">
+                <h1>The Best <span>Pizza</span> Website</h1>
+                <span>Are you hungry?</span>
+                <p>Don't wait !</p>
+                <div>
+                    <button>Order Now</button>
+                </div>
+            </div>
+        </header>
+    </div>
+      <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/lib/underscore/underscore.min.js"></script>
+      <script type="text/javascript" src="/js/lib/backbone/backbone.min.js"></script>
+      <script type="text/javascript" src="/js/lib/marionette/backbone.marionette.min.js"></script>
+      <script type="text/javascript" src="/js/lib/handlebars/handlebars.min.js"></script>
+      <script type="text/javascript" src="/js/lib/swag/swag.min.js"></script>
+      <script type="text/javascript" src="/js/loadTemplate.js"></script>
+      <script type="text/javascript" src="/js/authManager.js"></script>
+      <script type="text/javascript">
+            authenticationManager.start();
+     </script>
+>>>>>>> Stashed changes
 </body>
 </html>

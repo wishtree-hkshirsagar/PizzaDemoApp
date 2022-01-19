@@ -1,1 +1,9 @@
+<<<<<<< Updated upstream
 node_modules/
+=======
+node_modules/
+properties.js
+resources/images/
+.project
+.settings/
+>>>>>>> Stashed changes
