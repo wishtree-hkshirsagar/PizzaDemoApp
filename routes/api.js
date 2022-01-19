@@ -5,6 +5,7 @@ const customerPizzaController = require('../app/http/controllers/customers/custo
 const orderController = require('../app/http/controllers/customers/orderController');
 const adminOrderController = require('../app/http/controllers/admin/adminOrderController');
 const publicController = require('../app/http/controllers/public/publicController');
+const cartController = require('../app/http/controllers/customers/cartController');
 const guest = require('../app/http/middleware/guest');
 const superAdmin = require('../app/http/middleware/superAdmin');
 const admin = require('../app/http/middleware/admin');
@@ -75,12 +76,25 @@ function initApiRoutes(app) {
 
     app.get('/v1/api/customer/order/:id', customer, orderController().getOrder);
 
+    app.post('/v1/api/customer/cart', customer, cartController().addToCart);
+
+    app.put('/v1/api/customer/cart', customer, cartController().removeFromCart);
+
+    app.delete('/v1/api/customer/cart', customer, cartController().emptyCart);
+
+    app.get('/v1/api/customer/cart', customer, cartController().getCartItems);
+
+
 
     // --------------------------------------------------------------------
     //                     public routes
     // --------------------------------------------------------------------
 
     app.post('/v1/api/cart', guest, publicController().addToCart);
+
+    app.put('/v1/api/cart', guest, publicController().removeFromCart);
+
+    app.delete('/v1/api/cart', guest, publicController().emptyCart);
 
     app.get('/v1/api/cart', guest, publicController().getCartItems);
 

@@ -1,5 +1,6 @@
 const Order = require('../../../models/order').Order;
-const stripe = require('stripe')('sk_test_51KFtEUCiI18G0MYYSMrYFvsLCzDF1T7gaugFNlx64gpnufN2eRD0RVyuFCxffg9FRfzv4PpsRBm00LWKpktNAyuI00t00uKcXe');
+const properties = require('../../../../app/config/properties');
+const stripe = require('stripe')(properties.STRIPE_BACKEND_SECRET);
 const crypto = require('crypto');
 
 function orderController() {
