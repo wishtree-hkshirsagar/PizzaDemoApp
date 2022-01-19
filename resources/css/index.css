@@ -55,31 +55,6 @@
 }
 
 
-/* @media(min-width: 576px){
-    .container{
-        max-width: 540px;
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-      max-width: 720px;
-    }
-}
-  
-@media (min-width: 992px) {
-    .container {
-      max-width: 960px;
-    }
-  }
-  
-@media (min-width: 1200px) {
-    .container {
-      max-width: 1152px;
-    }
-  } */
-
-
 header.topbar{
     background: var(--primary);
     padding: 0.75rem 0;
@@ -129,9 +104,6 @@ nav .top .contact h6, nav .top .time h6{
 nav .top .contact img, nav .top .time img{
     margin-right: 1rem;
 }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 
 nav .navbar a{
     text-decoration: none;
@@ -194,8 +166,6 @@ header.topbarOne{
     background-repeat: no-repeat;
     background-size: cover;
 }
->>>>>>> Stashed changes
-=======
 
 nav .navbar a{
     text-decoration: none;
@@ -231,4 +201,3 @@ nav .navbar a:hover{
     transform: scale(0.8,0.6);
     padding: 1.5rem 1rem;
 }
->>>>>>> refs/heads/feature/auth
