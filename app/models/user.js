@@ -23,6 +23,10 @@ var UserSchema = new Schema({
         type: String,
         enum: ['superadmin', 'admin', 'customer'],
         default: 'customer'
+    },
+    uniqueId: {
+        type: String,
+        required: true
     }
 }, {timestamps: true});
 

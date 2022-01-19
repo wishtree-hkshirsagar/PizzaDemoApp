@@ -3,6 +3,7 @@ const Otp = require('../../models/otp').Otp;
 const Email = require('../../config/mail');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const crypto = require('crypto');
 
 function authController() {
     return {
@@ -62,12 +63,13 @@ function authController() {
             });
 
             const hashedPassword = await bcrypt.hash(password, 10);
-
+            const id = crypto.randomBytes(16).toString('hex');
             const user = new User({
                 name: name,
                 email: email,
                 contact: contact,
-                password: hashedPassword
+                password: hashedPassword,
+                uniqueId: id
             });
 
             user.save().then((user) => {
