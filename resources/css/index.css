@@ -3,6 +3,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Raleway-Regular';
 }
 
 
@@ -44,7 +46,6 @@
     --pure: #FEFEFE;
     --light: #F0F0F0;
     --white: #FFFFFF;
-    --footer: #2D333F;
 
 }
 
@@ -161,11 +162,42 @@ nav .navbar a:hover{
 }
 
 header.topbarOne{
-    height: 600px;
+    height: 500px;
     background-image: url(/images/site/pizza.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: 0% 0%;
+    overflow: hidden;
 }
+
+.topbarOne .container h1{
+    color: var(--white);
+    font-family: 'Raleway-Bold';
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.topbarOne .container h1 span{
+    color: var(--primary);
+}
+
+.topbarOne .container span{
+    color: var(--white);
+}
+
+.topbarOne .container p{
+    color: var(--white);
+    font-family: 'Raleway-medium';
+    width: 50%;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.dontWait{
+    font-family: 'Raleway-Bold';
+    font-size: 1.5rem;
+}
+
 
 nav .navbar a{
     text-decoration: none;
@@ -201,3 +233,89 @@ nav .navbar a:hover{
     transform: scale(0.8,0.6);
     padding: 1.5rem 1rem;
 }
+
+
+.btn-order{
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid var(--primary);
+    width: 130px;
+    cursor: pointer;
+    font-family: 'Raleway-Medium';
+}
+
+.btn-order:hover{
+    background-color: var(--primary-hover);
+}
+
+.sectionHeading{
+    font-family:"Raleway-bold";
+    text-align:center;
+    Position:relative;
+    margin-bottom:6rem;
+}
+
+.sectionHeading:after{
+    content:'';
+    display:block;
+    width: 100%;
+    height:30px;
+    background-image:url(/icons/hr.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    position:absolute;
+    bottom:-40px;
+}
+
+section.ourServices{
+    background: var(--light);
+}
+
+section.ourServices .serviceCard{
+    background: var(--white);
+    text-align: center;
+    padding: 2rem;
+    padding-top: 4rem;
+    border-radius: 4px;
+    position: relative;
+}
+
+section.ourServices .serviceCard .icon{
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+section.ourServices .serviceCard h2{
+    font-family: 'Raleway-Bold';
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+section.ourServices .serviceCard p{
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+footer{
+    background:var(--primary);
+    padding:2rem 0;
+}
+
+
+footer.copyright{
+    padding:1rem 0;
+    background: var(--primary);
+    color:var(--pure);
+    text-align: center;
+    font-size: 0.95rem;
+}
+footer.copyright a{
+    color:var(--secondary);
+    text-decoration: none;
+    font-weight: bold;
+}
+
