@@ -2,7 +2,6 @@
   "name": "pizza-demo-app",
   "version": "1.0.0",
   "description": "This is a demo app",
-  
   "scripts": {
     "start": "node server",
     "dev": "nodemon server.js"
@@ -10,8 +9,18 @@
   "author": "Demo App",
   "license": "ISC",
   "dependencies": {
+    "@stripe/stripe-js": "^1.22.0",
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
     "express": "^4.17.2",
-    "express-hbs": "^2.4.0"
+    "express-hbs": "^2.4.0",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.1.6",
+    "multer": "^1.4.4",
+    "nodemailer": "^6.7.2",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "stripe": "^8.197.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

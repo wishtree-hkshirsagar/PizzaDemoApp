@@ -10,27 +10,27 @@
 
 @font-face{
     font-family: 'Raleway-regular';
-    src: url('/resources/fonts/Raleway-Regular.ttf');
+    src: url('/fonts/Raleway-Regular.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-medium';
-    src: url('/resources/fonts/Raleway-Medium.ttf');
+    src: url('/fonts/Raleway-Medium.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-bold';
-    src: url('/resources/fonts/Raleway-Bold.ttf');
+    src: url('/fonts/Raleway-Bold.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-semibold';
-    src: url('/resources/fonts/Raleway-SemiBold.ttf');
+    src: url('/fonts/Raleway-SemiBold.ttf');
 }
 
 @font-face{
     font-family: 'Raleway-black';
-    src: url('/resources/fonts/Raleway-Black.ttf');
+    src: url('/fonts/Raleway-Black.ttf');
 }
 
 /* colors */
@@ -81,7 +81,7 @@
 
 
 header.topbar{
-    background: var(--secondary);
+    background: var(--primary);
     padding: 0.75rem 0;
 }
 
@@ -95,6 +95,10 @@ header.topbar .icons a{
 
 .justify-between{
     justify-content: space-between;
+}
+
+.justify-center{
+    justify-content: center;
 }
 
 .items-center{
@@ -125,6 +129,7 @@ nav .top .contact h6, nav .top .time h6{
 nav .top .contact img, nav .top .time img{
     margin-right: 1rem;
 }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
@@ -190,3 +195,40 @@ header.topbarOne{
     background-size: cover;
 }
 >>>>>>> Stashed changes
+=======
+
+nav .navbar a{
+    text-decoration: none;
+    color: var(--secondary);
+    font-family: 'Raleway-semibold';
+    font-size: 1rem;
+    padding: 1.5rem 1rem;
+    margin: 10px;
+}
+
+nav .navbar a:hover{
+    color: var(--primary);
+}
+
+.icon-cart {
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    background-size: cover;
+    background-image: url(/icons/cart.svg);
+    transform: scale(0.8,0.6);
+    cursor: pointer;
+    padding: 1.5rem 1rem;
+}
+
+.icon-cart:hover,
+.icon-cart:focus {
+    display: block;
+    background-image: url(/icons/cart-1.svg);
+    height: 5rem;
+    width: 5rem;
+    background-size: cover;
+    transform: scale(0.8,0.6);
+    padding: 1.5rem 1rem;
+}
+>>>>>>> refs/heads/feature/auth
