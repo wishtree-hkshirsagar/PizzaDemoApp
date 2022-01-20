@@ -17,6 +17,8 @@ function initWebRoutes(app) {
 
     app.get('/forgotPassword', guest, homeController().forgotPasswordPage);
 
+    app.get('/logout', auth, homeController().logout);
+
     // app.get('/cart', cartController().index);
 
    

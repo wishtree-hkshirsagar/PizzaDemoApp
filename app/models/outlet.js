@@ -16,6 +16,10 @@ var OutletSchema = new Schema({
         ref: 'User',
         require: true
     },
+    ownerName: {
+        type: String,
+        required: true
+    },
     uniqueId: {
         type: String,
         required: true

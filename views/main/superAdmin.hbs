@@ -5,11 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza Hut | Super Admin</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/superAdminStyle.css">
 </head>
 <body>
-    <h1>Super Admin</h1>
-    <div class="pageWrap" data-uniqueId="{{uniqueId}}"  data-role="{{role}}">
-        
+    <div class="pageWrap" data-uniqueId="{{uniqueId}}"  data-role="{{role}}" data-name="{{name}}">
+        <div class="topbar">
+            <nav class="navbar">
+                <div class="pageTitle"></div>
+                <div class="logout tooltip">
+                    <a href="/logout"><i class="fas fa-sign-out-alt"></i></a>
+                    <span class="tooltiptext">logout</span>
+                </div>
+            </nav>
+        </div>
+        <div class="navAndContent">
+            <div class="sidebar">
+                <aside class="navbarFixedLeft">
+                    <div class="brand">
+                        <a href="/" class="logo">
+                            PIZZA HUT
+                        </a>
+                    </div>
+                    <div class="userProfile">
+                       &nbsp;&nbsp;&nbsp; 
+                       <i class="fas fa-user fa-2x"></i>
+                        <div class="user-initials">
+                            <p class="userName">Hi, {{name}}</p>
+                        </div>
+                    </div>
+                    <nav class="navArea">
+                        <ul>
+                            <span class="navlink">
+                                <li>
+                                    <a class="primaryLink home">
+                                        <i class="fas fa-home"></i> &nbsp;
+                                        <span class="primaryTitle">Home</span>
+                                    </a>
+                                </li>
+                            </span>
+                            <span class="navlink">
+                                <li>
+                                    <a class="primaryLink dashboard">
+                                        <i class="fas fa-th-list"></i> &nbsp;
+                                        <span class="primaryTitle">Dashboard</span>
+                                    </a>
+                                </li>
+                            </span>
+                            <span class="navlink">
+                                <li>
+                                    <a class="primaryLink outlets">
+                                        <i class="fas fa-store-alt"></i> &nbsp;
+                                        <span class="primaryTitle">Outlets</span>
+                                    </a>
+                                </li>
+                            </span>
+                        </ul>
+                    </nav>
+                </aside>
+            </div>
+            <div class="container">
+                <div class="mainContent"></div>
+            </div>
+        </div>
     </div>
+
+
+      <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/lib/underscore/underscore.min.js"></script>
+      <script type="text/javascript" src="/js/lib/backbone/backbone.min.js"></script>
+      <script type="text/javascript" src="/js/lib/marionette/backbone.marionette.min.js"></script>
+      <script type="text/javascript" src="/js/lib/handlebars/handlebars.min.js"></script>
+      <script type="text/javascript" src="/js/lib/swag/swag.min.js"></script>
+      <script type="text/javascript" src="/js/loadTemplate.js"></script>
+      <script type="text/javascript" src="/js/superAdminManager.js"></script>
+      <script type="text/javascript">
+            Swag.registerHelpers(window.Handlebars);
+            superAdminManager.start();
+     </script>
 </body>
 </html>

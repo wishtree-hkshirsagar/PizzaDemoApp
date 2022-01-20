@@ -25,6 +25,7 @@ function initApiRoutes(app) {
 
     app.post('/v1/api/updatePassword', authController().updatePassword);
 
+
     
     // --------------------------------------------------------------------
     //                     super admin routes

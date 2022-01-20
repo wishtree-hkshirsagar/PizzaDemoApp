@@ -46,8 +46,8 @@ authenticationManager.on('start', function(){
 });
 
 // Router
-authenticationManager.module('authenticationApp', function(authenticationApp, authenticationManager, backbone, marionette, $, _){
-    authenticationApp.Router = marionette.AppRouter.extend({
+authenticationManager.module('authenticationApp', function(authenticationApp, authenticationManager, Backbone, Marionette, $, _){
+    authenticationApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             '': 'homeView',
             'login': 'loginView',
@@ -102,7 +102,7 @@ authenticationManager.module('authenticationApp', function(authenticationApp, au
 });
 
 // Controllers
-authenticationManager.module('authenticationApp.entityController', function (entityController, authenticationManager, backbone, marionette, $, _) {
+authenticationManager.module('authenticationApp.entityController', function (entityController, authenticationManager, Backbone, Marionette, $, _) {
     entityController.controller = {
 
         showHome: function(){
@@ -128,7 +128,7 @@ authenticationManager.module('authenticationApp.entityController', function (ent
             });
             stylesheet.appendTo('head');
             console.log('login controller');
-            var loginView = new authenticationManager.authenticationApp.entityViews.loginView();
+            var loginView = new authenticationManager.authenticationApp.EntityViews.loginView();
             loginView.on('show', function(){
 
                 $('.signup').click(function(ev){
@@ -195,7 +195,7 @@ authenticationManager.module('authenticationApp.entityController', function (ent
             });
             stylesheet.appendTo('head');
             console.log('register controller');
-            var registerView = new authenticationManager.authenticationApp.entityViews.registerView();
+            var registerView = new authenticationManager.authenticationApp.EntityViews.registerView();
             registerView.on('show', function(){
 
                 $('.login').click(function(ev){
@@ -274,7 +274,7 @@ authenticationManager.module('authenticationApp.entityController', function (ent
         },
         showForgotPassword: function(){
             console.log('forgot password controller');
-            var forgotPasswordView = new authenticationManager.authenticationApp.entityViews.forgotPasswordView();
+            var forgotPasswordView = new authenticationManager.authenticationApp.EntityViews.forgotPasswordView();
             forgotPasswordView.on('show', function(){
 
                 $('.login').click(function(ev){
@@ -487,9 +487,9 @@ authenticationManager.module('authenticationApp.entityController', function (ent
 });
 
 // Views
-authenticationManager.module('authenticationApp.entityViews', function (entityViews, authenticationManager, backbone, marionette, $, _) {
+authenticationManager.module('authenticationApp.EntityViews', function (EntityViews, authenticationManager, Backbone, Marionette, $, _) {
 
-    entityViews.loginView = marionette.ItemView.extend({
+    EntityViews.loginView = Marionette.ItemView.extend({
         template: 'loginTemplate',
         events: {
             'click .btnLogin': 'submit'
@@ -571,7 +571,7 @@ authenticationManager.module('authenticationApp.entityViews', function (entityVi
         }
     });
 
-    entityViews.registerView = marionette.ItemView.extend({
+    EntityViews.registerView = Marionette.ItemView.extend({
         template: 'registerTemplate',
         events: {
             'click .btnRegister': 'submit'
@@ -693,7 +693,7 @@ authenticationManager.module('authenticationApp.entityViews', function (entityVi
         }
     });
 
-    entityViews.forgotPasswordView = marionette.ItemView.extend({
+    EntityViews.forgotPasswordView = Marionette.ItemView.extend({
         template: 'forgotPasswordTemplate',
         events: {}
     });

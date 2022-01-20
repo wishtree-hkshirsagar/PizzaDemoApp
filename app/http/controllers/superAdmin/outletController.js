@@ -6,7 +6,7 @@ function outletController() {
     return {
          createOutlet(req, res) {
             console.log('owner id', req.body.ownerId);
-          
+            let ownerName = null;
             if(!req.body.name || !req.body.address){
                 return res.status(400).send({error: "Invalid parameters. Please provide all the required information."});
             }
@@ -14,7 +14,7 @@ function outletController() {
                User.findOne({_id: req.body.ownerId}, function(err, user){
                console.log('user', user);
                console.log('user role', user.role);
-              
+                
                if(!user){
                    return res.status(404).json({
                        message: 'Invalid parameter. Please provide user id'
@@ -26,13 +26,29 @@ function outletController() {
                        message: 'Unauthorized user'
                    })
                }
+
+                ownerName = user.name;
            })
 
+           Outlet.findOne({ownerId: req.body.ownerId}, function(err, outlet){
+               if(err){
+                   return res.status(500).json({
+                       message: 'Something went wrong'
+                   })
+               }
+               if(outlet){
+                   return res.status(409).json({
+                       message: 'User is already the owner of an outlet, try assigning a different user'
+                   })
+               }
+           
+            
             const id = crypto.randomBytes(16).toString('hex');
             let newOutlet = new Outlet({
                 name: req.body.name,
                 address: req.body.address,
                 ownerId: req.body.ownerId,
+                ownerName: ownerName,
                 uniqueId: id
             });
 
@@ -46,12 +62,14 @@ function outletController() {
                     message: 'Something went wrong'
                 })
             })
+
+         })
         },
 
         getAllOutlets(req, res){
             let query = Outlet.find({}).select({'_id': 0});
             query.exec(function(err, outlet){
-                console.log('59', outlet);
+                console.log('outlet', outlet);
                 
                 if(err){
                     return res. status(500).json({
@@ -64,10 +82,8 @@ function outletController() {
                         message: 'Data not found'
                     })
                 }
-
-                return res.status(200).json({
-                    outlet: outlet
-                })
+               
+                return res.send(outlet)
             })
         },
 
@@ -86,9 +102,7 @@ function outletController() {
                    })
                }
 
-               return res.status(200).json({
-                   outlet: outlet
-               })
+               return res.send(outlet)
            })
         },
 
