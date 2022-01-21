@@ -24,7 +24,8 @@
     --light: #F0F0F0;
     --white: #FFFFFF;
     --dark: #000000;
-    --tw-bg-opacity: 1;
+    --ternaryOne: #acacac;
+    --opacity: 1;
 }
 
 .active{
@@ -33,34 +34,37 @@
     text-transform: uppercase;
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
+
+.focus{
+    border: 2px solid var(--success) !important;
 }
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    top: 60%;
-    left: 74%;
-    margin-left: -85px;
+.hide{
+    display: none !important;
+}
+
+.disable{
+    cursor: none !important;
+    opacity: 0.5 !important;
+}
+
+.formError{
+    color: var(--danger) !important;
+}
+
+.error{
+    border: 2px solid var(--danger) !important;
+}
+
+.iconColor{
     color: var(--dark);
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
 }
 
 .navbar{
     border-radius: 0;
     margin-bottom: 0;
     border: 0;
-    background-color: rgba(247,247,247, var(--tw-bg-opacity));
+    background-color: rgba(247,247,247, var(--opacity));
     top: 0;
     position: fixed;
     right: 0;
@@ -201,3 +205,67 @@
     flex-shrink: 0;
     cursor: pointer;
 }
+
+.add{
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.inputField {
+    max-width: 380px;
+    width: 100%;
+    background-color: var(--ternary);
+    margin: 10px 0;
+    height: 55px;
+    border-radius: 55px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+}
+
+.inputField i {
+    text-align: center;
+    line-height: 55px;
+    color: var(--ternaryOne);
+    transition: 0.5s;
+    font-size: 1.1rem;
+}
+  
+  .inputField input {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--secondary);
+}
+  
+ .inputField input::placeholder {
+    color: var(--ternaryOne);
+    font-weight: 500;
+}
+
+.btn {
+    width: 150px;
+    background-color: var(--primary);
+    border: none;
+    outline: none;
+    height: 49px;
+    border-radius: 49px;
+    color: var(--pure);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+  
+.btn:hover {
+    background-color: var(--primary-hover);
+}
+

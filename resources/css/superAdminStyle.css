@@ -3,6 +3,7 @@
     --gray: #eee;
     --white: #fff;
     --dark: #000;
+    --darkgray: #a9a9a9;
 }
 
 .hide{
@@ -40,6 +41,10 @@
     background-image: url(../icons/no-data-found.svg);
 }
 
+.allOutlets{
+    margin-top: 50px;
+}
+
 .eachItem{
     position: relative;
     display: block;
@@ -48,7 +53,7 @@
     padding: 50px;
     border-radius: 20px;
     margin-bottom: 20px;
-    margin-left: 165px;
+    margin-left: 135px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,7 +71,7 @@
     max-height: 250px;
     padding: 4.5rem;
     background: var(--white);
-    box-shadow: 0 1.4rem 8rem rgba(0,0,0,.2);
+    box-shadow: 0 1.4rem 8rem rgba(0,0,0,2%);
     display: flex;
     align-items: center;
     border-radius: .8rem;
@@ -76,7 +81,6 @@
 .outletImage{
     min-width: 15rem;
     max-width: 25rem;
-    /* height: 20rem; */
     transform: translateX(-10rem);
     position: relative;
 }
@@ -85,7 +89,53 @@
     margin-bottom: 28px;
 }
 
-/* .outletInfo{
-    max-height: 140px;
-    overflow: auto;
-} */
+.eachItem .editOutlet{
+    cursor: pointer;
+    position: absolute;
+    margin-top: -105px;
+    right: 25px;
+    visibility: hidden;
+}
+
+.eachItem:hover .editOutlet{
+    visibility: visible;
+}
+
+.inputField{
+    margin: 10px 10px 10px 15rem !important;
+}
+
+.textarea{
+    height: auto !important;
+    border-radius: 20px !important;
+    padding: 25px 11px;
+    text-align: center !important;
+}
+
+textarea::placeholder{
+    color: #a9a9a9 !important;
+    font-weight: 500;
+    transform: translateY(20px);
+}
+
+
+.inputField textarea, 
+.inputField select{
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--secondary);
+}
+
+.btn {
+    width: 45% !important;
+    margin: 10px 10px 10px 15rem !important;
+    padding-top: 10px !important;
+}
+  
+.btn:hover {
+    background-color: var(--primary-hover);
+}

@@ -6,6 +6,7 @@ const orderController = require('../app/http/controllers/customers/orderControll
 const adminOrderController = require('../app/http/controllers/admin/adminOrderController');
 const publicController = require('../app/http/controllers/public/publicController');
 const cartController = require('../app/http/controllers/customers/cartController');
+const ownerController = require('../app/http/controllers/superAdmin/ownerController');
 const guest = require('../app/http/middleware/guest');
 const superAdmin = require('../app/http/middleware/superAdmin');
 const admin = require('../app/http/middleware/admin');
@@ -35,11 +36,15 @@ function initApiRoutes(app) {
 
     app.get('/v1/api/outlet', superAdmin, outletController().getAllOutlets);
 
+    app.get('/v1/api/active/outlet', superAdmin, outletController().getAllActiveOutlets);
+
     app.get('/v1/api/outlet/:id', superAdmin, outletController(). getOutlet);
 
     app.put('/v1/api/outlet/:id', superAdmin, outletController().updateOutlet);
 
     app.delete('/v1/api/outlet/:id', superAdmin, outletController().deleteOutlet);
+
+    app.get('/v1/api/owner', superAdmin, ownerController().getAllOwners);
 
 
     // --------------------------------------------------------------------

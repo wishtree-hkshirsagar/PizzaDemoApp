@@ -11,6 +11,10 @@ function initWebRoutes(app) {
 
     app.get('/home', auth, mainController().main);
 
+    app.get('/add/outlet', auth, mainController().main);
+
+    app.get('/outlets', auth, mainController().main);
+
     app.get('/login', guest, homeController().loginPage);
 
     app.get('/register', guest, homeController().registerPage);

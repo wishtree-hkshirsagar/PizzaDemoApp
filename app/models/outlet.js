@@ -23,6 +23,10 @@ var OutletSchema = new Schema({
     uniqueId: {
         type: String,
         required: true
+    },
+    outletStatus: {
+        type: Boolean,
+        default: true
     }
 }, {timestamps: true});
 

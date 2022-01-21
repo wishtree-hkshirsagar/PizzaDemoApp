@@ -87,6 +87,27 @@ function outletController() {
             })
         },
 
+        getAllActiveOutlets(req, res){
+            let query = Outlet.find({outletStatus : true}).select({'_id': 0});
+            query.exec(function(err, outlet){
+                console.log('outlet', outlet);
+                
+                if(err){
+                    return res. status(500).json({
+                        message: 'Something went wrong'
+                    })
+                }
+
+                if(!outlet){
+                    return res.status(404).json({
+                        message: 'Data not found'
+                    })
+                }
+               
+                return res.send(outlet)
+            })
+        },
+
         getOutlet(req, res){
            let query = Outlet.findOne({uniqueId: req.params.id}).select({'_id': 0});
            query.exec(function(err, outlet){
