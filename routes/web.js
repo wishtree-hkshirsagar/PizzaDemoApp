@@ -13,6 +13,8 @@ function initWebRoutes(app) {
 
     app.get('/add/outlet', auth, mainController().main);
 
+    app.get('/edit/outlet/:id', auth, mainController().main);
+
     app.get('/outlets', auth, mainController().main);
 
     app.get('/login', guest, homeController().loginPage);

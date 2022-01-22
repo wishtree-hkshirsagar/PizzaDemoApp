@@ -4,7 +4,6 @@ function homeController() {
             res.render('public/index');
         },
         loginPage(req, res) {
-            console.log('7777');
             res.render('public/login');
         },
         registerPage(req, res) {

@@ -32,9 +32,10 @@ input {
 
 .swal-button{
   background-color: var(--primary) !important;
+  outline: none !important;
 }
 
-.swal-button:not([disabled]):hover{
+.swal-button:hover{
   background-color: var(--primary-hover) !important;
 }
 

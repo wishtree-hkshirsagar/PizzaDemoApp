@@ -54,8 +54,7 @@ function outletController() {
 
             newOutlet.save().then((result) => {
                 return res.status(200).json({
-                    message: 'Outlet created successfully!',
-                    outlet: newOutlet
+                    message: 'Outlet created successfully!'
                 });
             }).catch((error) => {
                 return res.status(501).json({
@@ -131,30 +130,61 @@ function outletController() {
             
             Outlet.findOne({uniqueId: req.params.id}, function(err, outlet){
                 console.log('outlet', outlet);
-                
+                console.log('outlet body', req.body)
+                if(req.body.status){
+                    console.log('******');
+                }
                 if(!outlet){
                     return res.status(404).json({
                         message: 'Data not found'
                     })
                 }else{
                     try{
-                        if(req.body.name){
-                            outlet.name = req.body.name;
-                        }
+                        
+                        if(outlet.ownerId.toString() !== req.body.ownerId){
+                            Outlet.find({ownerId: req.body.ownerId}, function(err, outlet){
 
-                        if(req.body.address){
-                            outlet.address = req.body.address;
-                        }
+                                if(err){
+                                    return res.status(500).json({
+                                        message: 'Something went wrong'
+                                    })
+                                }
+                                if(outlet){
+                                    return res.status(409).json({
+                                        message: 'User is already the owner of an outlet, try assigning a different user'
+                                    })
+                                }
 
-                        if(req.body.ownerId){
-                            outlet.ownerId = req.body.ownerId;
-                        }
+                            });
+                        } else {
+                           
+                            if(req.body.name){
+                                console.log('inside name');
+                                outlet.name = req.body.name;
+                            }
+    
+                            if(req.body.address){
+                                console.log('inside address');
+                                outlet.address = req.body.address;
+                            }
+    
+                            if(req.body.ownerId){
+                                console.log('inside ownerId');
+                                outlet.ownerId = req.body.ownerId;
+                            }
 
-                        outlet.save(() => {
-                            return res.status(200).json({
-                                message: 'Outlet updated successfully!'
+                            
+                            outlet.outletStatus = req.body.outletStatus;
+                            
+    
+                            outlet.save(() => {
+                                return res.status(200).json({
+                                    message: 'Outlet updated successfully!'
+                                })
                             })
-                        })
+                        }
+                       
+                       
                     } catch(error){
                         return res.status(501).json({
                             message: 'Something went wrong'

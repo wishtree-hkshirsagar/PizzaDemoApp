@@ -34,6 +34,22 @@
     text-transform: uppercase;
 }
 
+.swal-button{
+    background-color: var(--primary) !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.swal-button--cancel{
+    color: var(--white) !important;
+    outline: none !important;
+    border: none !important;
+}
+  
+.swal-button:hover{
+    background-color: var(--primary-hover) !important;
+}
+
 
 .focus{
     border: 2px solid var(--success) !important;

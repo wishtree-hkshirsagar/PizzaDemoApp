@@ -1,10 +1,18 @@
 
 :root{
+    --primary: #FE5F1E;
+    --primary-hover: #b23301;
     --gray: #eee;
     --white: #fff;
     --dark: #000;
     --darkgray: #a9a9a9;
+    --danger: #FE4545;
 }
+
+.swal-overlay--show-modal .swal-modal{
+    margin-left: 155px !important;
+}
+
 
 .hide{
     display: none;
@@ -138,4 +146,15 @@ textarea::placeholder{
   
 .btn:hover {
     background-color: var(--primary-hover);
+}
+
+.deleteOutlet{
+    float: right;
+    margin-top: -50px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.deleteOutlet:hover{
+    color: var(--danger);
 }

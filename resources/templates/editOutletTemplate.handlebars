@@ -1,0 +1,41 @@
+<div class="editOutletForm">
+    <h1>Edit Outlet</h1>
+    <div class="nameError">
+        <span class="formError nameError"></span>
+    </div>
+    <div class="inputField inputFieldName">
+        <i class="fas fa-store-alt"></i>
+        <input type="name" class="inputName" name="name" value="{{name}}" placeholder="Store Name" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="addressError">
+        <span class="formError addressError"></span>
+    </div>
+    <div class="inputField textarea inputFieldAddress">
+        <i class="fas fa-map-marked-alt"></i>
+        <textarea name="address" class="inputAddress" value="{{address}}" placeholder="Store Address" cols="30" rows="10" autocomplete="off" spellcheck="off">{{address}}</textarea>
+    </div>
+     <div class="statusError">
+        <span class="formError statusError"></span>
+    </div>
+    <div class="inputField inputFieldStatus">
+        <i class="fas fa-user-shield"></i>
+        <select name="status" class="inputStatus" placeholder="Outlet status" id="outletStatus">
+            <option value="" selected="false" disabled="disabled">Outlet Status</option>
+            <option value="true">Open</option>
+            <option value="false">Closed</option>
+        </select>
+    </div>
+    <div class="ownerError">
+        <span class="formError ownerError"></span>
+    </div>
+    <div class="inputField inputFieldOwner">
+        <i class="fas fa-user-shield"></i>
+        <select name="owner" class="inputOwner" placeholder="Outlet owner" id="outletOwner">
+            <option value="" selected="false" disabled="disabled">Outlet Owner</option>
+        </select>
+    </div>
+    <div class="btn saveOutlet">Save Outlet</div>
+</div>
+<div>
+    <span class="deleteOutlet">Delete</span>
+</div>
