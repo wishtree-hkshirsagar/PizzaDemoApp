@@ -15,6 +15,8 @@ function initWebRoutes(app) {
 
     app.get('/edit/outlet/:id', auth, mainController().main);
 
+    app.get('/detail/outlet/:id', auth, mainController().main);
+
     app.get('/outlets', auth, mainController().main);
 
     app.get('/login', guest, homeController().loginPage);

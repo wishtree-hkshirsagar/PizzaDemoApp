@@ -13,7 +13,6 @@
     margin-left: 155px !important;
 }
 
-
 .hide{
     display: none;
 }
@@ -97,7 +96,8 @@
     margin-bottom: 28px;
 }
 
-.eachItem .editOutlet{
+.eachItem .editOutlet,
+.eachItem .showDetailOutlet{
     cursor: pointer;
     position: absolute;
     margin-top: -105px;
@@ -105,7 +105,8 @@
     visibility: hidden;
 }
 
-.eachItem:hover .editOutlet{
+.eachItem:hover .editOutlet,
+.eachItem:hover .showDetailOutlet{
     visibility: visible;
 }
 

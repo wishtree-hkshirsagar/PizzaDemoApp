@@ -137,7 +137,8 @@ superAdminManager.module('superAdminApp', function(superAdminApp, superAdminMana
             'home': 'homeView',
             'outlets': 'outletsView',
             'add/outlet': 'addNewOutletView',
-            'edit/outlet/:id': 'editOutletView'
+            'edit/outlet/:id': 'editOutletView',
+            'detail/outlet/:id': 'detailOutletView'
         }
     });
 
@@ -157,6 +158,9 @@ superAdminManager.module('superAdminApp', function(superAdminApp, superAdminMana
         },
         editOutletView: function(uniqueId){
             superAdminManager.superAdminApp.entityController.controller.showEditOutlet(uniqueId);
+        },
+        detailOutletView: function(uniqueId){
+            superAdminManager.superAdminApp.entityController.controller.showDetailOutlet(uniqueId);
         }
     };
 
@@ -181,6 +185,12 @@ superAdminManager.module('superAdminApp', function(superAdminApp, superAdminMana
         API.editOutletView(uniqueId);
     });
 
+    superAdminManager.vent.on('show:outletDetail', function(uniqueId){
+        console.log(uniqueId);
+        superAdminManager.navigate('/detail/outlet/' + uniqueId);
+        API.detailOutletView(uniqueId);
+    });
+
     superAdminManager.addInitializer(function(){
         new superAdminApp.Router({ controller: API });
     });
@@ -199,10 +209,11 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                 });
                
                 outletsView.on('show', function(){
+                    $('.showDetailOutlet').removeClass('hide');
                     $('.primaryLink').removeClass('active');
                     $('.primaryLink.home').addClass('active');
                     $('.add').addClass('hide');
-                    $('.pageTitle').text('Home');
+                    $('.pageTitle').text('Active Outlets');
                 });
                 superAdminManager.contentRegion.show(outletsView);
             });
@@ -239,6 +250,27 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                 $('.primaryLink').removeClass('active');
                 $('.primaryLink.outlets').addClass('active');
                 $('.pageTitle').text('Add New Outlet');
+
+                newOutletView.$('.inputName').on('focus', function(){
+                    newOutletView.$('.inputFieldName').addClass('focus');
+                    newOutletView.$('.inputFieldName').removeClass('error');
+                    newOutletView.$('.nameError .formError').text('');
+                });
+
+                newOutletView.$('.inputName').on('blur', function(){
+                    newOutletView.$('.inputFieldName').removeClass('focus');
+                });
+
+                newOutletView.$('.inputAddress').on('focus', function(){
+                    newOutletView.$('.inputFieldAddress').addClass('focus');
+                    newOutletView.$('.inputFieldAddress').removeClass('error');
+                    newOutletView.$('.addressError .formError').text('');
+                });
+
+                newOutletView.$('.inputAddress').on('blur', function(){
+                    newOutletView.$('.inputFieldAddress').removeClass('focus');
+                });
+
             });
 
             newOutletView.on('save:outlet', function(value){
@@ -292,10 +324,34 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                     $('.primaryLink.outlets').addClass('active');
                     $('.pageTitle').text('Edit Outlet');
 
+                    editOutletView.$('.inputName').on('focus', function(){
+                        editOutletView.$('.inputFieldName').addClass('focus');
+                        editOutletView.$('.inputFieldName').removeClass('error');
+                        editOutletView.$('.nameError .formError').text('');
+                    });
+    
+                    editOutletView.$('.inputName').on('blur', function(){
+                        editOutletView.$('.inputFieldName').removeClass('focus');
+                    });
+    
+                    editOutletView.$('.inputAddress').on('focus', function(){
+                        editOutletView.$('.inputFieldAddress').addClass('focus');
+                        editOutletView.$('.inputFieldAddress').removeClass('error');
+                        editOutletView.$('.addressError .formError').text('');
+                    });
+    
+                    editOutletView.$('.inputAddress').on('blur', function(){
+                        editOutletView.$('.inputFieldAddress').removeClass('focus');
+                    });
+
                     if(outlet.get('outletStatus') === false){
                         editOutletView.$('#outletStatus option[value="false"]').attr("selected", "selected");
+                        editOutletView.$('.inputFieldStatus .fas').removeClass('fa-store-alt');
+                        editOutletView.$('.inputFieldStatus .fas').addClass('fa-store-alt-slash');
                     } else {
                         editOutletView.$('#outletStatus option[value="true"]').attr("selected", "selected");
+                        editOutletView.$('.inputFieldStatus .fas').removeClass('fa-store-alt-slash');
+                        editOutletView.$('.inputFieldStatus .fas').addClass('fa-store-alt');
                     }
                 });
 
@@ -378,6 +434,33 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                       })
                 })
                 superAdminManager.contentRegion.show(editOutletView);
+            });
+        },
+
+        showDetailOutlet: function(uniqueId) {
+            var fetchingOutlet = superAdminManager.request('outlet:entity', uniqueId);
+            $.when(fetchingOutlet).done(function(outlet){
+                var detailOutletView = new superAdminManager.superAdminApp.EntityViews.detailOutletView({
+                    model: outlet
+                });
+
+                detailOutletView.on('show', function(){
+                    $('.primaryLink').removeClass('active');
+                    $('.primaryLink.home').addClass('active');
+                    $('.pageTitle').text('Outlet Details');
+
+                    if(outlet.get('outletStatus') === false){
+                        detailOutletView.$('.inputStatus').val('Closed');
+                       
+                    }else{
+                        detailOutletView.$('.inputStatus').val('Open');
+                        detailOutletView.$('.inputFieldStatus .fas').removeClass('fa-store-alt-slash');
+                        detailOutletView.$('.inputFieldStatus .fas').addClass('fa-store-alt');
+                    }
+                   
+                });
+
+                superAdminManager.contentRegion.show(detailOutletView);
             });
         }
     }
@@ -573,6 +656,10 @@ superAdminManager.module('superAdminApp.EntityViews', function (EntityViews, sup
         }
     });
 
+    EntityViews.detailOutletView = Marionette.ItemView.extend({
+        template: 'detailOutletTemplate'
+    });
+
     EntityViews.eachOutletView = Marionette.ItemView.extend({
         tagName: 'span',
         className: 'eachItem',
@@ -582,10 +669,14 @@ superAdminManager.module('superAdminApp.EntityViews', function (EntityViews, sup
             this.$el.attr('data-uniqueId', this.model.get('uniqueId'));
         },
         events: {
-            'click .editOutlet': 'editOutlet' 
+            'click .editOutlet': 'editOutlet',
+            'click .showDetailOutlet': 'showDetailOutlet'
         },
         editOutlet: function(){
             superAdminManager.vent.trigger('edit:outlet', this.model.get('uniqueId'));
+        },
+        showDetailOutlet: function(){
+            superAdminManager.vent.trigger('show:outletDetail', this.model.get('uniqueId'));
         }
     });
 
