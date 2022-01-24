@@ -1,13 +1,56 @@
+
+
 :root{
     --primary: #FE5F1E;
     --primary-hover: #b23301;
-    --gray: #eee;
+    --secondary: #232B38;
+    --gray: #808080;
     --white: #fff;
     --dark: #000;
     --darkgray: #a9a9a9;
     --danger: #FE4545;
 }
 
+.disableBtn{
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.inputField svg{
+    margin-top: 20px;
+    margin-left: 20px;
+    color: var(--gray);
+}
+
 .allPizzas{
     margin-top: 50px;
 }
+
+.inputField{
+    margin: 10px 10px 10px 15rem !important;
+}
+
+.inputField select{
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--secondary);
+}
+
+.inputFieldImage input{
+    margin-top: 14px !important;
+}
+
+.btn {
+    width: 45% !important;
+    margin: 10px 10px 10px 15rem !important;
+    padding-top: 10px !important;
+}
+  
+.btn:hover {
+    background-color: var(--primary-hover);
+}
+

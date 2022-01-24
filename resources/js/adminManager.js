@@ -89,7 +89,8 @@ adminManager.module('adminApp', function(adminApp, adminManager, Backbone, Mario
     adminManager.Router = Marionette.AppRouter.extend({
         appRoutes: {
             'home': 'homeView',
-            'pizzas': 'pizzasView'
+            'pizzas': 'pizzasView',
+            'add/pizza': 'addNewPizzaView',
         }
     });
 
@@ -101,6 +102,9 @@ adminManager.module('adminApp', function(adminApp, adminManager, Backbone, Mario
         pizzasView: function(){
             adminManager.adminApp.entityController.controller.showPizzas();
         },
+        addNewPizzaView: function(){
+            adminManager.adminApp.entityController.controller.showNewPizza();
+        },
     };
 
     adminManager.vent.on('home:page', function(){
@@ -111,6 +115,11 @@ adminManager.module('adminApp', function(adminApp, adminManager, Backbone, Mario
     adminManager.vent.on('pizza:getAll', function(){
         adminManager.navigate('/pizzas');
         API.pizzasView();
+    });
+
+    adminManager.vent.on('newPizzaPage:show', function(){
+        adminManager.navigate('/add/pizza');
+        API.addNewPizzaView();
     });
 
     adminManager.addInitializer(function(){
@@ -152,12 +161,118 @@ adminManager.module('adminApp.entityController', function (entityController, adm
                 pizzasView.on('show', function(){
                     $('.primaryLink').removeClass('active');
                     $('.primaryLink.pizza').addClass('active');
-                    $('.add').addClass('hide');
+                    $('.add').removeClass('hide');
+                    $('.add').addClass('addPizza');
                     $('.pageTitle').text('Pizzas');
+                    $('.addPizza').click(function(ev){
+                        ev.preventDefault();
+                        adminManager.vent.trigger('newPizzaPage:show');
+                    });
                 });
 
                 adminManager.contentRegion.show(pizzasView);
             });
+        },
+        showNewPizza: function(){
+            var newPizzaView = new adminManager.adminApp.EntityViews.newPizzaView();
+
+            newPizzaView.on('show', function(){
+                $('.primaryLink').removeClass('active');
+                $('.primaryLink.pizza').addClass('active');
+                $('.pageTitle').text('Add New Pizza');
+
+                newPizzaView.$('.savePizza').addClass('disableBtn');
+
+                newPizzaView.$('.inputName').on('focus', function(){
+                    newPizzaView.$('.inputFieldName').addClass('focus');
+                    newPizzaView.$('.inputFieldName').removeClass('error');
+                    newPizzaView.$('.nameError .formError').text('');
+                });
+
+                newPizzaView.$('.inputName').on('blur', function(){
+                    newPizzaView.$('.inputFieldName').removeClass('focus');
+                });
+
+                newPizzaView.$('.inputSize').on('focus', function(){
+                    newPizzaView.$('.inputFieldSize').addClass('focus');
+                    newPizzaView.$('.inputFieldSize').removeClass('error');
+                    newPizzaView.$('.sizeError .formError').text('');
+                });
+
+                newPizzaView.$('.inputSize').on('blur', function(){
+                    newPizzaView.$('.inputFieldSize').removeClass('focus');
+                });
+
+                newPizzaView.$("#uploadFile").on('change',function(e) {
+                   
+                    e.preventDefault();
+                    var data = new FormData($('#uploadForm')[0]);
+                    $.ajax({
+                        url:'/v1/api/upload',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        data: data,
+                        success: function(response){
+                            newPizzaView.$('.savePizza').removeClass('disableBtn');
+                            swal({
+                                title: "Success!",
+                                text: response.message,
+                                type: "success",
+                                icon: "success"
+                             });
+                        },
+                        error: function (response) {
+                            swal({
+                                title: "Error!",
+                                text: response.responseJSON.message,
+                                type: "error",
+                                icon: "error"
+                             });
+                        }
+                    });
+                });
+            });
+
+           
+
+            newPizzaView.on('save:pizza', function(value){
+                console.log(value);
+                $.ajax({
+                    url:'/v1/api/pizza',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify(value),
+                    success: function(response){
+
+                        swal({
+                            title: "Success!",
+                            text: response.message,
+                            type: "success",
+                            icon: "success",
+                            timer: 2000,
+                            buttons: false
+                         });
+                         setTimeout(() => {
+                            location.assign('/home');
+                         },2000)
+                    },
+                    error: function (response) {
+
+                        swal({
+                            title: "Error!",
+                            text: response.responseJSON.message,
+                            type: "error",
+                            icon: "error"
+                         });
+                    }
+                });
+
+            })
+
+            adminManager.contentRegion.show(newPizzaView);
         }
     }
 });
@@ -165,6 +280,53 @@ adminManager.module('adminApp.entityController', function (entityController, adm
 
 // Views
 adminManager.module('adminApp.EntityViews', function (EntityViews, adminManager, Backbone, Marionette, $, _) {
+
+    EntityViews.newPizzaView = Marionette.ItemView.extend({
+        template: 'newPizzaTemplate',
+        events: {
+            'click .savePizza': 'savePizza'
+        },
+        savePizza: function(ev){
+            ev.preventDefault();
+            console.log('save pizza');
+
+            if(!this.$('.inputName').val() || !this.$('.inputSize').val() || !this.$('.inputPrice').val()){
+                this.$('.inputFieldName').addClass('error');
+                this.$('.nameError .formError').text('Please enter pizza name').css({'margin-left': '-182px'});
+                this.$('.inputFieldSize').addClass('error');
+                this.$('.sizeError .formError').text('Please select pizza size').css({'margin-left': '-192px'});
+                this.$('.inputFieldPrice').addClass('error');
+                this.$('.priceError .formError').text('Please enter pizza price').css({'margin-left': '-192px'});
+                return;
+            }
+
+            if(!this.$('.inputName').val()){
+                this.$('.inputFieldName').addClass('error');
+                this.$('.nameError .formError').text('Please enter pizza name').css({'margin-left': '-182px'});
+                return;
+            }
+
+            if(!this.$('.inputSize').val()){
+                this.$('.inputFieldSize').addClass('error');
+                this.$('.sizeError .formError').text('Please select pizza size').css({'margin-left': '-192px'});
+                return;
+            }
+
+            if(!this.$('.inputPrice').val()){
+                this.$('.inputFieldPrice').addClass('error');
+                this.$('.priceError .formError').text('Please enter pizza price').css({'margin-left': '-192px'});
+                return;
+            }
+
+            var value = {
+                title: this.$('.inputName').val().trim(),
+                size: this.$('.inputSize').val(),
+                price: parseInt(this.$('.inputPrice').val())
+            }
+            console.log(value);
+            this.trigger('save:pizza', value);
+        }
+    });
 
     EntityViews.eachPizzaView = Marionette.ItemView.extend({
         tagName: 'span',

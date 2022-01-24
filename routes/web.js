@@ -21,6 +21,8 @@ function initWebRoutes(app) {
 
     app.get('/pizzas', auth, mainController().main);
 
+    app.get('/add/pizza', auth, mainController().main);
+
     app.get('/login', guest, homeController().loginPage);
 
     app.get('/register', guest, homeController().registerPage);

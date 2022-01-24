@@ -266,6 +266,16 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                     newOutletView.$('.inputFieldAddress').removeClass('focus');
                 });
 
+                newOutletView.$('.inputOwner').on('focus', function(){
+                    newOutletView.$('.inputFieldOwner').addClass('focus');
+                    newOutletView.$('.inputFieldOwner').removeClass('error');
+                    newOutletView.$('.ownerError .formError').text('');
+                });
+
+                newOutletView.$('.inputOwner').on('blur', function(){
+                    newOutletView.$('.inputFieldOwner').removeClass('focus');
+                });
+
             });
 
             newOutletView.on('save:outlet', function(value){
