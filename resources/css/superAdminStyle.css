@@ -48,6 +48,7 @@
 
 .outletName{
     margin-bottom: 28px;
+    text-transform: capitalize;
 }
 
 .eachItem .editOutlet,

@@ -23,6 +23,10 @@ function initWebRoutes(app) {
 
     app.get('/add/pizza', auth, mainController().main);
 
+    app.get('/edit/pizza/:id', auth, mainController().main);
+
+    app.get('/detail/pizza/:id', auth, mainController().main);
+
     app.get('/login', guest, homeController().loginPage);
 
     app.get('/register', guest, homeController().registerPage);

@@ -46,7 +46,7 @@ superAdminManager.module('Entities', function (Entities, superAdminManager, Back
                     return '/v1/api/outlet'
                 }
             },
-            idAttribute: '_id'
+            idAttribute: 'id'
         });
 
         Entities.OutletCollection = Backbone.Collection.extend({

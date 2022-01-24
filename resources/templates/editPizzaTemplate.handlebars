@@ -1,0 +1,44 @@
+<div class="newOutletForm">
+    <h1>Edit Pizza</h1>
+
+    <div class="nameError">
+        <span class="formError nameError"></span>
+    </div>
+    <div class="inputField inputFieldName">
+        <i class="fas fa-pizza-slice"></i>
+        <input type="text" class="inputName" name="name" value="{{title}}" placeholder="Pizza Name" autocomplete="off" spellcheck="false">
+    </div>
+    
+    <div class="sizeError">
+        <span class="formError sizeError"></span>
+    </div>
+    <div class="inputField inputFieldSize">
+        <i class="fas fa-pizza"></i>
+        <select name="size" class="inputSize" placeholder="Pizza size" id="pizzaSize">
+            <option value="" selected="false" disabled="disabled">Pizza Size</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+        </select>
+    </div>
+
+    <div class="priceError">
+        <span class="formError priceError"></span>
+    </div>
+    <div class="inputField inputFieldPrice">
+        <i class="fas fa-rupee-sign"></i>
+        <input type="number" min="1" class="inputPrice" name="price" value="{{price}}" placeholder="Pizza Price" autocomplete="off">
+    </div>
+
+    <div class="imageError">
+        <span class="formError imageError"></span>
+    </div>
+    <div class="inputField inputFieldImage">
+        <i class="far fa-image"></i>
+         <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" id="uploadFile">
+        </form>
+    </div>
+
+    <div class="btn savePizza">Save Pizza</div>
+</div>

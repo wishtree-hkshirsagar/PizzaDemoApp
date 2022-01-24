@@ -1,7 +1,8 @@
 const Pizza = require('../../../models/pizza').Pizza;
+const User = require('../../../models/user').User;
 const multer = require('multer');
 const crypto = require('crypto');
-
+const fs = require('fs');
 
 let uploadedfile;
 function pizzaController() {
@@ -65,6 +66,16 @@ function pizzaController() {
         },
 
         addPizza(req, res){
+
+            // let ownerId = null;
+            // let ownerName = null;
+            // User.findOne({_id: req.user._id}, function(err, user){
+            //     console.log('user', user);
+            //     console.log('user role', user.role);
+            // });
+
+            // return;
+
             if(!req.body.title || !req.body.size || !req.body.price){
                 return res.status(400).send({error: "Invalid parameters. Please provide all the required information."});
             }
@@ -126,16 +137,15 @@ function pizzaController() {
                     })
                 }
 
-                return res.status(200).json({
-                    pizza: pizza
-                })
+                return res.send(pizza);
             })
         },
 
         updatePizza(req, res) {
-
+         
             Pizza.findOne({uniqueId: req.params.id}, function(err, pizza) {
-               
+
+
                 if(!pizza){
                     return res.status(404).json({
                         message: 'Data not found'
@@ -163,9 +173,9 @@ function pizzaController() {
                             pizza.image = uploadedfile.filename
                         }
                         pizza.save(() => {
-                            return res.status(200).json({
-                                message: 'Pizza updated successfully'
-                            }); 
+                                return res.status(200).json({
+                                    message: 'Pizza updated successfully'
+                                    }); 
                             });
                      } catch(error){
                          return res.status(500).json({

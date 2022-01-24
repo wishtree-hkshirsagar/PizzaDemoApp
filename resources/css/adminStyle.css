@@ -4,11 +4,17 @@
     --primary: #FE5F1E;
     --primary-hover: #b23301;
     --secondary: #232B38;
+    --ternary: #d8d1d11c;
+    --lightgray: #eee;
     --gray: #808080;
     --white: #fff;
     --dark: #000;
     --darkgray: #a9a9a9;
     --danger: #FE4545;
+}
+
+.swal-overlay--show-modal .swal-modal{
+    margin-left: 155px !important;
 }
 
 .disableBtn{
@@ -54,3 +60,71 @@
     background-color: var(--primary-hover);
 }
 
+.eachItem{
+    background: var(--lightgray) !important;
+}
+
+.allPizzas{
+    margin-top: 50px;
+}
+
+.pizzaImage img{
+    min-width: 95%;
+    max-width: 95%;
+}
+
+.pizzaContent{
+    width: 110%;
+    max-width: 98rem;
+    max-height: 250px;
+    padding: 4.5rem;
+    background: var(--white);
+    box-shadow: 0 1.4rem 8rem rgba(0,0,0,2%);
+    display: flex;
+    align-items: center;
+    border-radius: .8rem;
+
+}
+
+.pizzaImage{
+    min-width: 15rem;
+    max-width: 25rem;
+    transform: translateX(-10rem);
+    position: relative;
+}
+
+.pizzaName{
+    margin-bottom: 28px;
+    text-transform: capitalize;
+}
+
+.eachItem .editPizza,
+.eachItem .showDetailPizza{
+    cursor: pointer;
+    position: absolute;
+    margin-top: -105px;
+    right: 25px;
+    visibility: hidden;
+}
+
+.eachItem:hover .editPizza,
+.eachItem:hover .showDetailPizza{
+    visibility: visible;
+}
+
+.imageContainer{
+    margin-top: 4rem;
+    max-width: 500px;
+    margin-left: 185px;
+    background: var(--ternary);
+}
+
+.infoContainer{
+    max-width: 500px;
+    margin-left: 185px;
+}
+
+.pizzaDetailImage img{
+    min-width: 45% !important;
+    max-width: 45% !important;
+}

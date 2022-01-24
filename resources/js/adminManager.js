@@ -36,21 +36,16 @@ adminManager.module('Entities', function (Entities, adminManager, Backbone, Mari
     
     Entities.Pizza = Backbone.Model.extend({
         initialize: function(options){
-            this._action = options._action;
-            this._id = options._id;
+            this.id = options.id;
         },
         url: function(){
-            if(this._action == "update"){
-                console.log('update')
-                return '/v1/api/pizza/' + this._id;
-            } else if(this._id) {
-                console.log(this._id)
-                return '/v1/api/pizza/' + this._id
+           if(this.id) {
+                return '/v1/api/pizza/' + this.id
             } else {
                 return '/v1/api/pizza'
             }
         },
-        idAttribute: '_id'
+        idAttribute: 'id'
     });
 
 
@@ -73,6 +68,19 @@ adminManager.module('Entities', function (Entities, adminManager, Backbone, Mari
                 }
             });
             return defer.promise();
+        },
+
+        getPizza: function(uniqueId){
+            var pizza = new Entities.Pizza({
+                id: uniqueId
+            }); 
+            var defer = $.Deferred();
+            pizza.fetch({
+                    success: function(data){
+                        defer.resolve(data);
+                    }
+            });
+            return defer.promise();
         }
     }
 
@@ -81,6 +89,10 @@ adminManager.module('Entities', function (Entities, adminManager, Backbone, Mari
       adminManager.reqres.setHandler('pizza:getAll', function(){
         return API.getAllPizzas();
     });
+
+     adminManager.reqres.setHandler('pizza:entity', function(uniqueId){
+        return API.getPizza(uniqueId);
+     });
 });
 
 // Router
@@ -91,6 +103,8 @@ adminManager.module('adminApp', function(adminApp, adminManager, Backbone, Mario
             'home': 'homeView',
             'pizzas': 'pizzasView',
             'add/pizza': 'addNewPizzaView',
+            'edit/pizza/:id': 'editPizzaView',
+            'detail/pizza/:id': 'detailPizzaView'
         }
     });
 
@@ -105,6 +119,12 @@ adminManager.module('adminApp', function(adminApp, adminManager, Backbone, Mario
         addNewPizzaView: function(){
             adminManager.adminApp.entityController.controller.showNewPizza();
         },
+        editPizzaView: function(uniqueId){
+            adminManager.adminApp.entityController.controller.showEditPizza(uniqueId);
+        },
+        detailPizzaView: function(uniqueId){
+            adminManager.adminApp.entityController.controller.showDetailPizza(uniqueId);
+        }
     };
 
     adminManager.vent.on('home:page', function(){
@@ -121,6 +141,16 @@ adminManager.module('adminApp', function(adminApp, adminManager, Backbone, Mario
         adminManager.navigate('/add/pizza');
         API.addNewPizzaView();
     });
+
+    adminManager.vent.on('edit:pizza', function(uniqueId){
+        adminManager.navigate('/edit/pizza/' + uniqueId);
+        API.editPizzaView(uniqueId);
+    })
+
+    adminManager.vent.on('show:detailPizza', function(uniqueId){
+        adminManager.navigate('/detail/pizza/' + uniqueId);
+        API.detailPizzaView(uniqueId);
+    })
 
     adminManager.addInitializer(function(){
         new adminManager.Router({ controller: API });
@@ -141,10 +171,11 @@ adminManager.module('adminApp.entityController', function (entityController, adm
                 });
                 console.log(pizzas);
                 pizzasView.on('show', function(){
+                    $('.showDetailPizza').removeClass('hide');
                     $('.primaryLink').removeClass('active');
                     $('.primaryLink.home').addClass('active');
                     $('.add').addClass('hide');
-                    $('.pageTitle').text('Pizzas');
+                    $('.pageTitle').text('Home');
                 });
 
                 adminManager.contentRegion.show(pizzasView);
@@ -159,6 +190,7 @@ adminManager.module('adminApp.entityController', function (entityController, adm
                     collection: pizzas
                 });
                 pizzasView.on('show', function(){
+                    $('.editPizza').removeClass('hide');
                     $('.primaryLink').removeClass('active');
                     $('.primaryLink.pizza').addClass('active');
                     $('.add').removeClass('hide');
@@ -202,6 +234,17 @@ adminManager.module('adminApp.entityController', function (entityController, adm
                 newPizzaView.$('.inputSize').on('blur', function(){
                     newPizzaView.$('.inputFieldSize').removeClass('focus');
                 });
+
+                newPizzaView.$('.inputPrice').on('focus', function(){
+                    newPizzaView.$('.inputFieldPrice').addClass('focus');
+                    newPizzaView.$('.inputFieldPrice').removeClass('error');
+                    newPizzaView.$('.priceError .formError').text('');
+                });
+
+                newPizzaView.$('.inputPrice').on('blur', function(){
+                    newPizzaView.$('.inputFieldPrice').removeClass('focus');
+                });
+
 
                 newPizzaView.$("#uploadFile").on('change',function(e) {
                    
@@ -273,6 +316,139 @@ adminManager.module('adminApp.entityController', function (entityController, adm
             })
 
             adminManager.contentRegion.show(newPizzaView);
+        },
+
+        showEditPizza: function(uniqueId){
+            var fetchingPizza = adminManager.request('pizza:entity', uniqueId);
+
+            $.when(fetchingPizza).done(function(pizza){
+                var editPizzaView = new adminManager.adminApp.EntityViews.editPizzaView({
+                    model: pizza
+                });
+
+                editPizzaView.on('show', function(){
+                    $('.primaryLink').removeClass('active');
+                    $('.primaryLink.pizza').addClass('active');
+                    $('.pageTitle').text('Edit Pizza');
+
+                    editPizzaView.$('#pizzaSize').val(pizza.get('size'));
+
+                    editPizzaView.$('.inputName').on('focus', function(){
+                        editPizzaView.$('.inputFieldName').addClass('focus');
+                        editPizzaView.$('.inputFieldName').removeClass('error');
+                        editPizzaView.$('.nameError .formError').text('');
+                    });
+    
+                    editPizzaView.$('.inputName').on('blur', function(){
+                        editPizzaView.$('.inputFieldName').removeClass('focus');
+                    });
+    
+                    editPizzaView.$('.inputSize').on('focus', function(){
+                        editPizzaView.$('.inputFieldSize').addClass('focus');
+                        editPizzaView.$('.inputFieldSize').removeClass('error');
+                        editPizzaView.$('.sizeError .formError').text('');
+                    });
+    
+                    editPizzaView.$('.inputSize').on('blur', function(){
+                        editPizzaView.$('.inputFieldSize').removeClass('focus');
+                    });
+
+                    editPizzaView.$('.inputPrice').on('focus', function(){
+                        editPizzaView.$('.inputFieldPrice').addClass('focus');
+                        editPizzaView.$('.inputFieldPrice').removeClass('error');
+                        editPizzaView.$('.priceError .formError').text('');
+                    });
+    
+                    editPizzaView.$('.inputPrice').on('blur', function(){
+                        editPizzaView.$('.inputFieldPrice').removeClass('focus');
+                    });
+
+                    editPizzaView.$("#uploadFile").on('change',function(e) {
+                   
+                        e.preventDefault();
+                        var data = new FormData($('#uploadForm')[0]);
+                        $.ajax({
+                            url:'/v1/api/upload',
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            data: data,
+                            success: function(response){
+                                swal({
+                                    title: "Success!",
+                                    text: response.message,
+                                    type: "success",
+                                    icon: "success"
+                                 });
+                            },
+                            error: function (response) {
+                                swal({
+                                    title: "Error!",
+                                    text: response.responseJSON.message,
+                                    type: "error",
+                                    icon: "error"
+                                 });
+                            }
+                        });
+                    });
+                })
+
+                editPizzaView.on('edit:pizza', function(value){
+                    $.ajax({
+                        url:'/v1/api/pizza/' + uniqueId,
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(value),
+                        success: function(response){
+    
+                            swal({
+                                title: "Success!",
+                                text: response.message,
+                                type: "success",
+                                icon: "success",
+                                timer: 2000,
+                                buttons: false
+                             });
+                             setTimeout(() => {
+                                location.assign('/home');
+                             },2000)
+                        },
+                        error: function (response) {
+    
+                            swal({
+                                title: "Error!",
+                                text: response.message,
+                                type: "error",
+                                icon: "error"
+                             });
+                        }
+                    });
+                });
+
+                adminManager.contentRegion.show(editPizzaView);
+            });
+        },
+        
+        showDetailPizza: function(uniqueId){
+            console.log(uniqueId);
+
+            var fetchingPizza = adminManager.request('pizza:entity', uniqueId);
+
+            $.when(fetchingPizza).done(function(pizza){
+                var detailPizzaView = new adminManager.adminApp.EntityViews.detailPizzaView({
+                    model: pizza
+                });
+
+                detailPizzaView.on('show', function(){
+                    $('.primaryLink').removeClass('active');
+                    $('.primaryLink.home').addClass('active');
+                    $('.pageTitle').text('Pizza Details');
+                })
+
+                adminManager.contentRegion.show(detailPizzaView);
+            });
         }
     }
 });
@@ -327,12 +503,79 @@ adminManager.module('adminApp.EntityViews', function (EntityViews, adminManager,
             this.trigger('save:pizza', value);
         }
     });
+    
+    EntityViews.editPizzaView = Marionette.ItemView.extend({
+        template: 'editPizzaTemplate',
+        initialize: function(){},
+        events: {
+            'click .savePizza': 'savePizza'
+        },
+        savePizza: function(ev){
+            ev.preventDefault();
+
+            if(!this.$('.inputName').val() || !this.$('.inputSize').val() || !this.$('.inputPrice').val()){
+                this.$('.inputFieldName').addClass('error');
+                this.$('.nameError .formError').text('Please enter pizza name').css({'margin-left': '-182px'});
+                this.$('.inputFieldSize').addClass('error');
+                this.$('.sizeError .formError').text('Please select pizza size').css({'margin-left': '-192px'});
+                this.$('.inputFieldPrice').addClass('error');
+                this.$('.priceError .formError').text('Please enter pizza price').css({'margin-left': '-192px'});
+                return;
+            }
+
+            if(!this.$('.inputName').val()){
+                this.$('.inputFieldName').addClass('error');
+                this.$('.nameError .formError').text('Please enter pizza name').css({'margin-left': '-182px'});
+                return;
+            }
+
+            if(!this.$('.inputSize').val()){
+                this.$('.inputFieldSize').addClass('error');
+                this.$('.sizeError .formError').text('Please select pizza size').css({'margin-left': '-192px'});
+                return;
+            }
+
+            if(!this.$('.inputPrice').val()){
+                this.$('.inputFieldPrice').addClass('error');
+                this.$('.priceError .formError').text('Please enter pizza price').css({'margin-left': '-192px'});
+                return;
+            }
+
+            var value = {
+                title: this.$('.inputName').val().trim(),
+                size: this.$('.inputSize').val(),
+                price: parseInt(this.$('.inputPrice').val())
+            }
+            console.log(value);
+            this.trigger('edit:pizza', value);
+            
+        }
+    });
+
+    EntityViews.detailPizzaView = Marionette.ItemView.extend({
+        template: 'detailPizzaTemplate'
+    });
 
     EntityViews.eachPizzaView = Marionette.ItemView.extend({
         tagName: 'span',
         className: 'eachItem',
         template: 'eachPizzaTemplate',
-        initialize: function(){}
+        initialize: function(){
+            console.log(this.model);
+            this.$el.attr('data-uniqueId', this.model.get('uniqueId'));
+        },
+        events: {
+            'click .editPizza': 'editPizza',
+            'click .showDetailPizza': 'showDetailPizza'
+        },
+        editPizza: function(ev){
+            ev.preventDefault();
+            adminManager.vent.trigger('edit:pizza', this.model.get('uniqueId'));
+        },
+        showDetailPizza: function(ev){
+            ev.preventDefault();
+            adminManager.vent.trigger('show:detailPizza', this.model.get('uniqueId'));
+        }
     });
 
     EntityViews.emptyView = Marionette.ItemView.extend({
