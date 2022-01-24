@@ -1,31 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza Hut | Admin</title>
-</head>
-<body>
 
-    <div class="pageWrap" data-uniqueId="{{uniqueId}}"  data-role="{{role}}">
-        <div class="sidenav">
-            <div class="menu">
-                <h2 id="logo">PIZZA HUT</h2>
-                <div class="userProfile">
-                    <span class="profileInitials">H</span>
-                </div>
-                <h5>Hrishi</h5>
-                <a href="#" class="active">Home</a>
-                <a href="#">Home</a>
-                <a href="#">Home</a>
-                <a href="#">Logout</a>
+</head>
+
+<body>
+    <div class="pageWrap" data-uniqueId="{{uniqueId}}" data-role="{{role}}" data-name="{{name}}">
+        <div class="topbar">
+            <nav class="navbar">
+                <div class="pageTitle"></div>
+                <span class="add hide" title="add pizza"><a href="#"><i class="fas fa-plus iconColor"></i>
+                    </a>
+                </span>
+                <span class="logout" title="logout"><a href="/logout"><i class="fas fa-sign-out-alt iconColor"></i></a>
+                </span>
+            </nav>
+        </div>
+        <div class="navAndContent">
+            <div class="sidebar">
+                <aside class="navbarFixedLeft">
+                    <div class="brand">
+                        <a href="/" class="logo">
+                            PIZZA HUT
+                        </a>
+                    </div>
+                    <div class="userProfile">
+                        &nbsp;&nbsp;&nbsp;
+                        <i class="fas fa-user fa-2x"></i>
+                        <div class="user-initials">
+                            <p class="userName">Hi, {{name}}</p>
+                        </div>
+                    </div>
+                    <nav class="navArea">
+                        <ul>
+                            <span class="navlink">
+                                <li>
+                                    <a class="primaryLink home">
+                                        <i class="fas fa-home"></i> &nbsp;
+                                        <span class="primaryTitle">Home</span>
+                                    </a>
+                                </li>
+                            </span>
+                            <span class="navlink">
+                                <li>
+                                    <a class="primaryLink pizza">
+                                        <i class="fas fa-store-alt"></i> &nbsp;
+                                        <span class="primaryTitle">Pizza</span>
+                                    </a>
+                                </li>
+                            </span>
+                        </ul>
+                    </nav>
+                </aside>
             </div>
-            <div class="body">
-                <h1>Sidebar</h1>
-                 <div class="mainContent"></div>
+            <div class="container">
+                <div class="mainContent"></div>
             </div>
         </div>
     </div>
+
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/lib/underscore/underscore.min.js"></script>
+    <script type="text/javascript" src="/js/lib/backbone/backbone.min.js"></script>
+    <script type="text/javascript" src="/js/lib/marionette/backbone.marionette.min.js"></script>
+    <script type="text/javascript" src="/js/lib/handlebars/handlebars.min.js"></script>
+    <script type="text/javascript" src="/js/lib/swag/swag.min.js"></script>
+    <script type="text/javascript" src="/js/loadTemplate.js"></script>
+    <script type="text/javascript" src="/js/adminManager.js"></script>
+    <script type="text/javascript">
+        Swag.registerHelpers(window.Handlebars);
+        adminManager.start();
+    </script>
 </body>
+
 </html>

@@ -19,6 +19,8 @@ function initWebRoutes(app) {
 
     app.get('/outlets', auth, mainController().main);
 
+    app.get('/pizzas', auth, mainController().main);
+
     app.get('/login', guest, homeController().loginPage);
 
     app.get('/register', guest, homeController().registerPage);

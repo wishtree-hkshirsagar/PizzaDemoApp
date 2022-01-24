@@ -1,0 +1,13 @@
+:root{
+    --primary: #FE5F1E;
+    --primary-hover: #b23301;
+    --gray: #eee;
+    --white: #fff;
+    --dark: #000;
+    --darkgray: #a9a9a9;
+    --danger: #FE4545;
+}
+
+.allPizzas{
+    margin-top: 50px;
+}

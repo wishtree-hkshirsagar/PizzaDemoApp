@@ -107,9 +107,7 @@ function pizzaController() {
                     })
                 }
 
-                return res.status(200).json({
-                    pizza: pizza
-                })
+                return res.send(pizza);
             })
         },
 
