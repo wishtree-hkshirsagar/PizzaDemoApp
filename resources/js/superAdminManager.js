@@ -1,8 +1,7 @@
 var superAdminManager = new Backbone.Marionette.Application();
 
 superAdminManager.addRegions({
-    contentRegion: '.mainContent',
-    overlayRegion: '.overlayContent'
+    contentRegion: '.mainContent'
 });
 
 superAdminManager.navigate = function(route, options){
@@ -41,11 +40,7 @@ superAdminManager.module('Entities', function (Entities, superAdminManager, Back
                 this.id = options.id;
             },
             url: function(){
-                if(this._action == "update"){
-                    // console.log('update')
-                    return '/v1/api/outlet/' + this.id;
-                } else if(this.id) {
-                    // console.log(this.id)
+                if(this.id) {
                     return '/v1/api/outlet/' + this.id
                 } else {
                     return '/v1/api/outlet'
