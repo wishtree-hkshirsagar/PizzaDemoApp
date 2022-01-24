@@ -67,15 +67,6 @@ function pizzaController() {
 
         addPizza(req, res){
 
-            // let ownerId = null;
-            // let ownerName = null;
-            // User.findOne({_id: req.user._id}, function(err, user){
-            //     console.log('user', user);
-            //     console.log('user role', user.role);
-            // });
-
-            // return;
-
             if(!req.body.title || !req.body.size || !req.body.price){
                 return res.status(400).send({error: "Invalid parameters. Please provide all the required information."});
             }
@@ -86,6 +77,7 @@ function pizzaController() {
                 size: req.body.size,
                 price: req.body.price,
                 image: uploadedfile.filename,
+                ownerId: req.user._id,
                 uniqueId: id
             });
 
@@ -102,8 +94,8 @@ function pizzaController() {
         },
 
         getAllPizza(req, res) {
-            console.log('admin get all pizza');
-            let query = Pizza.find({}).select({'_id': 0});
+            
+            let query = Pizza.find({ownerId: req.user._id}).select({'_id': 0});
             query.exec(function(err, pizza){
                 
                 if(err){
@@ -123,7 +115,7 @@ function pizzaController() {
         },
 
         getPizza(req, res) {
-            let query = Pizza.findOne({uniqueId: req.params.id}).select({'_id': 0});
+            let query = Pizza.findOne({ownerId: req.user._id, uniqueId: req.params.id}).select({'_id': 0});
             query.exec(function(err, pizza){
                 if(err){
                     return res.status(500).json({
@@ -152,6 +144,7 @@ function pizzaController() {
                     })
                 }else{
                     try{
+                        
                         if(req.body.title){
                             pizza.title = req.body.title
                         }

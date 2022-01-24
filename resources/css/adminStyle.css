@@ -64,6 +64,11 @@
     background: var(--lightgray) !important;
 }
 
+.newPizzaForm,
+.editPizzaForm{
+    margin-top: 25px;
+}
+
 .allPizzas{
     margin-top: 50px;
 }
@@ -127,4 +132,15 @@
 .pizzaDetailImage img{
     min-width: 45% !important;
     max-width: 45% !important;
+}
+
+.deletePizza{
+    float: right;
+    margin-top: -50px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.deletePizza:hover{
+    color: var(--danger);
 }

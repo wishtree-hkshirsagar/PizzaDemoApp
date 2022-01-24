@@ -427,6 +427,48 @@ adminManager.module('adminApp.entityController', function (entityController, adm
                     });
                 });
 
+                editPizzaView.on('delete:pizza', function(uniqueId){
+                    swal({
+                        title: "Are you sure?",
+                        text: "You want to delete this pizza?",
+                        icon: "warning",
+                        buttons: [
+                          'No',
+                          'Yes'
+                        ],
+                        dangerMode: true,
+                      }).then(function(isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                            url: '/v1/api/pizza/' + uniqueId,
+                            type: 'DELETE',
+                            success: function(){
+                                swal({
+                                    title: "Success!",
+                                    text: 'Pizza deleted successfully!',
+                                    type: "success",
+                                    icon: "success",
+                                    timer: 2000,
+                                    buttons: false
+                                });
+                                setTimeout(() => {
+                                    location.assign('/home');
+                                },2000)
+                            },
+                            error: function(response){
+                        
+                                swal({
+                                    title: "Error!",
+                                    text: response.message,
+                                    type: "error",
+                                    icon: "error"
+                                });
+                            }
+                         });
+                        }
+                      })
+                })
+
                 adminManager.contentRegion.show(editPizzaView);
             });
         },
@@ -508,7 +550,8 @@ adminManager.module('adminApp.EntityViews', function (EntityViews, adminManager,
         template: 'editPizzaTemplate',
         initialize: function(){},
         events: {
-            'click .savePizza': 'savePizza'
+            'click .savePizza': 'savePizza',
+            'click .deletePizza': 'deletePizza'
         },
         savePizza: function(ev){
             ev.preventDefault();
@@ -549,6 +592,10 @@ adminManager.module('adminApp.EntityViews', function (EntityViews, adminManager,
             console.log(value);
             this.trigger('edit:pizza', value);
             
+        },
+        deletePizza: function(){
+    
+            this.trigger('delete:pizza', this.model.get('uniqueId'));
         }
     });
 

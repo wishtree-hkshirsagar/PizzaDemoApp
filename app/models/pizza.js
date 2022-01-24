@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId;
 
 var PizzaSchema = new Schema({
     title: {
@@ -14,6 +15,11 @@ var PizzaSchema = new Schema({
     },
     image: {
         type: String,
+    },
+    ownerId: {
+        type: ObjectId,
+        ref: 'User',
+        require: true
     },
     uniqueId: {
         type: String,
