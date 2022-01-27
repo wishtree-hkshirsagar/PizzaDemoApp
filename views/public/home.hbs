@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Hut | Pizza</title>
+
+     <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <div class="header">
+        <header class="topbar">
+            <div class="container">
+                <div class="icons">
+                    <a href="#"><img src="/icons/facebook.svg" alt="facebook"></a>
+                    <a href="#"><img src="/icons/twitter.svg" alt="twitter"></a>
+                    <a href="#"><img src="/icons/google.svg" alt="google"></a>
+                    <a href="#"><img src="/icons/instagram.svg" alt="instagram"></a>
+                </div>
+            </div>
+        </header>
+        <nav>
+            <div class="top">
+                <div class="container flex justifyBetween">
+                    <div class="contact flex itemsCenter">
+                        <img src="/icons/phone.svg" alt="phone">
+                        <div>
+                            <h5>Call US: (+91) 123 456 789</h5>
+                            <h6>E-mail : support@pizzahut.com</h6>
+                        </div>
+                    </div>
+                    <div class="branding">
+                        <a href="#" class="home"><img src="/icons/logo.png" alt=""></a>
+                    </div>
+                    <div class="time flex itemsCenter">
+                        <img src="/icons/clock.svg" alt="clock">
+                        <div>
+                            <h5>Working Hours:</h5>
+                            <h6>Mon - Sat (8.00am - 10.00pm)</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar shadow">
+                <div class="container flex justifyCenter">
+                    <a class="login" href="#">Log In</a>
+                    <a class="signup" href="#">Sign Up</a>
+                    <span class="iconCart"><a href="/cart"></a></span>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="mainContent"></div>
+    <footer class="copyright">
+        <div>
+            Copyright © 2022 .All rights reserved by <a href="#" class="home">Pizza Hut</a>
+        </div>
+    </footer>
+    <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="/js/lib/jquery/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/lib/underscore/underscore.min.js"></script>
+      <script type="text/javascript" src="/js/lib/backbone/backbone.min.js"></script>
+      <script type="text/javascript" src="/js/lib/marionette/backbone.marionette.min.js"></script>
+      <script type="text/javascript" src="/js/lib/handlebars/handlebars.min.js"></script>
+      <script type="text/javascript" src="/js/lib/swag/swag.min.js"></script>
+      <script type="text/javascript" src="/js/loadTemplate.js"></script>
+      <script type="text/javascript" src="/js/publicManager.js"></script>
+      <script type="text/javascript">
+            publicManager.start();
+     </script>
+</body>
+</html>
