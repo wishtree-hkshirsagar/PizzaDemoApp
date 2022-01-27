@@ -96,6 +96,11 @@ authenticationManager.module('authenticationApp', function(authenticationApp, au
         API.forgotPasswordView();
     });
 
+    authenticationManager.vent.on('cart:page', function(){
+        authenticationManager.navigate('cart');
+        API.cartView();
+    });
+
     authenticationManager.addInitializer(function(){
         new authenticationApp.Router({ controller: API });
     });

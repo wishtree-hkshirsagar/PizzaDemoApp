@@ -51,10 +51,7 @@ superAdminManager.module('Entities', function (Entities, superAdminManager, Back
 
         Entities.OutletCollection = Backbone.Collection.extend({
             initialize: function(models, options){
-                // console.log(options);
                 this.action = options.action
-               
-                return;
             },
             url: function(){
                 if(this.action === "active"){
@@ -204,6 +201,7 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                 });
                
                 outletsView.on('show', function(){
+                    $('.outletOwner').removeClass('hide');
                     $('.showDetailOutlet').removeClass('hide');
                     $('.primaryLink').removeClass('active');
                     $('.primaryLink.home').addClass('active');
@@ -226,6 +224,7 @@ superAdminManager.module('superAdminApp.entityController', function (entityContr
                       $('.editOutlet').removeClass('hide');
                       $('.primaryLink').removeClass('active');
                       $('.primaryLink.outlets').addClass('active');
+                      $('.outletOwner').removeClass('hide');
                       $('.pageTitle').text('Outlets');
                       $('.add').removeClass('hide');
                       $('.add').addClass('addOutlet');

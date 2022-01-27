@@ -27,6 +27,14 @@ function initWebRoutes(app) {
 
     app.get('/detail/pizza/:id', auth, mainController().main);
 
+    app.get('/public/outlets', guest, homeController().homePage);
+
+    app.get('/public/pizzas/:id', guest, homeController().homePage);
+
+    app.get('/public/detail/pizza/:id', guest, homeController().homePage);
+
+    app.get('/cart', guest, homeController().cartPage);
+
     app.get('/login', guest, homeController().loginPage);
 
     app.get('/register', guest, homeController().registerPage);
@@ -35,7 +43,7 @@ function initWebRoutes(app) {
 
     app.get('/logout', auth, homeController().logout);
 
-    // app.get('/cart', cartController().index);
+   
 
    
     

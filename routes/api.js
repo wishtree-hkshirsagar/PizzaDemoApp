@@ -104,6 +104,10 @@ function initApiRoutes(app) {
 
     app.get('/v1/api/cart', guest, publicController().getCartItems);
 
+    app.get('/v1/api/public/outlet', guest, publicController().getAllOutlets);
+
+    app.get('/v1/api/public/outlet/:id', guest, publicController().getOutlet);
+
     app.get('/v1/api/public/pizza', guest, publicController().getAllPizza);
 
     app.get('/v1/api/public/pizza/:id', guest, publicController().getPizza);

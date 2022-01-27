@@ -41,7 +41,7 @@
 
 .outletImage{
     min-width: 15rem;
-    max-width: 25rem;
+    /* max-width: 25rem; */
     transform: translateX(-10rem);
     position: relative;
 }

@@ -12,6 +12,12 @@ function homeController() {
         forgotPasswordPage(req, res) {
             res.render('public/forgot');
         },
+        homePage(req, res){
+            res.render('public/home');
+        },
+        cartPage(req, res) {
+            res.render('public/cart')
+        },
         logout(req, res) {
             req.logout();
             req.session.destroy(() =>{

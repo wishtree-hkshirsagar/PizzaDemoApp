@@ -74,8 +74,8 @@
 }
 
 .pizzaImage img{
+    width: 85%;
     min-width: 95%;
-    max-width: 95%;
 }
 
 .pizzaContent{
@@ -92,8 +92,8 @@
 }
 
 .pizzaImage{
-    min-width: 15rem;
-    max-width: 25rem;
+    /* min-width: 15rem; */
+    /* max-width: 25rem; */
     transform: translateX(-10rem);
     position: relative;
 }

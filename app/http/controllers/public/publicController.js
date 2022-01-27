@@ -1,4 +1,5 @@
 const Pizza = require('../../../models/pizza').Pizza;
+const Outlet = require('../../../models/outlet').Outlet;
 
 function publicController(){
     return {
@@ -121,9 +122,7 @@ function publicController(){
                     })
                 }
 
-                return res.status(200).json({
-                    pizza: pizza
-                })
+               return res.send(pizza);
             })
         },
 
@@ -142,11 +141,73 @@ function publicController(){
                     })
                 }
 
-                return res.status(200).json({
-                    pizza: pizza
-                })
+                return res.send(pizza);
             })
         },
+
+        getAllOutlets(req, res) {
+            console.log('get all outlets');
+            let query = Outlet.find({outletStatus : true}).select({'_id': 0});
+            query.exec(function(err, outlet){
+                console.log('outlet', outlet);
+                
+                if(err){
+                    return res. status(500).json({
+                        message: 'Something went wrong'
+                    })
+                }
+
+                if(!outlet){
+                    return res.status(404).json({
+                        message: 'Data not found'
+                    })
+                }
+               
+                return res.send(outlet)
+            })
+        },
+
+        getOutlet(req, res){
+            let query = Outlet.findOne({uniqueId: req.params.id}).select({'_id': 0, 'name': 0, 'address': 0, 'ownerName': 0, 'uniqueId': 0, 'outletStatus': 0, 'createdAt': 0, 'updatedAt': 0, '__v': 0});
+
+            let ownerId;
+            query.exec(function(err, outlet){
+                if(err){
+                    return res.status(500).json({
+                        message: 'Something went wrong'
+                    })
+                }
+ 
+                if(!outlet){
+                    return res.status(404).json({
+                        message: 'Data not found'
+                    })
+                }
+                ownerId = outlet.ownerId;
+                console.log('OWNER ID',ownerId);
+
+                let query1 = Pizza.find({ownerId: ownerId}).select({'_id': 0});
+                query1.exec(function(err, pizza){
+
+                    if(err){
+                        return res.status(500).json({
+                            message: 'Something went wrong'
+                        })
+                    }
+     
+                    if(!pizza){
+                        return res.status(404).json({
+                            message: 'Data not found'
+                        })
+                    }
+
+                    return res.send(pizza);
+                })
+               
+            })
+
+            
+         }
     }
 }
 

@@ -3,15 +3,21 @@
     <h1 class="outletName">{{name}}</h1>
         <span class="editOutlet hide" title="edit outlet"><i class="fas fa-edit fa-2x"></i></span>
         <span class="showDetailOutlet hide" title="show details"><i class="fas fa-clipboard-list fa-2x"></i></span>
+        <span class="showOutletPizza hide" title="show pizzas"><i class="fas fa-external-link-alt fa-2x"></i></span>
     <div class="outletContent">
         
         <div class="outletImage">
             <img src="/images/site/store.png" alt="outlet image">
         </div>
         <div class="outletInfo">
-        
-        <h3 class="outletOwner">{{ownerName}}</h3>
-        <p>Owner</p>
+        <div class="outletOwner hide">
+            <h3>{{ownerName}}</h3>
+            <p>Owner</p>
+        </div>
+        <div class="outletAddress hide">
+            <h3>{{address}}</h3>
+            <p>Address</p>
+        </div>
         </div>
     </div>
 </div>
