@@ -463,8 +463,13 @@ authenticationManager.module('authenticationApp.entityController', function (ent
                                 title: "Success!",
                                 text: "Password has been updated successfully",
                                 type: "success",
-                                icon: "success"
+                                icon: "success",
+                                timer: 2000,
+                                buttons: false
                              });
+                             setTimeout(() => {
+                                location.assign('/login');
+                            },2000)
                         }, 
                         error: function(response){
                             console.log(response)

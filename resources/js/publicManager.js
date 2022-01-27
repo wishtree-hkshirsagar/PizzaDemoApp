@@ -1,5 +1,7 @@
 var publicManager = new Backbone.Marionette.Application();
 
+var counter = 0;
+
 publicManager.addRegions({
     contentRegion: '.mainContent'
 });
@@ -261,7 +263,76 @@ publicManager.module('publicApp.EntityViews', function (EntityViews, publicManag
 
 
     EntityViews.detailPizzaView = Marionette.ItemView.extend({
-        template: 'detailPizzaTemplate'
+        template: 'detailPizzaTemplate',
+        initialize: function(){
+            $.ajax({
+                url: '/v1/api/itemCount',
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(response){
+                    console.log(response);
+                },
+                error: function(response){
+                    console.log(response);
+                }
+            });
+        },
+        events: {
+            'click .addQty': 'addPizza',
+            'click .removeQty': 'removePizza'
+        },
+        addPizza: function(ev){
+
+            ev.preventDefault();
+            counter = counter + 1;
+            $('.cartQty').text(counter);
+            console.log(this.model);
+            $.ajax({
+                url: '/v1/api/cart',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    uniqueId: this.model.get('uniqueId'),
+                    title: this.model.get('title'),
+                    size: this.model.get('size'),
+                    price: this.model.get('price'),
+                    image: this.model.get('image')
+                }),
+                success: function(response){
+                    console.log(response);
+                },
+                error: function(response){
+                    console.log(response);
+                }
+            });
+
+        },
+        removePizza: function(){
+
+            if(counter > 0){
+                counter = counter - 1;
+                $('.cartQty').text(counter);
+                $.ajax({
+                    url: '/v1/api/cart',
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        uniqueId: this.model.get('uniqueId')
+                    }),
+                    success: function(response){
+                        console.log(response);
+                    },
+                    error: function(response){
+                        console.log(response);
+                    }
+                })
+            }
+            
+           
+        }
     });
 
     EntityViews.eachPizzaView = Marionette.ItemView.extend({

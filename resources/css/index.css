@@ -409,7 +409,7 @@ footer.copyright a{
 .pizzaHeader{
     text-align: center;
     margin-top: 8rem;
-    margin-left: 2rem;
+    margin-left: 3rem;
 }
 
 .pizzaDetailImage img{
@@ -468,6 +468,10 @@ footer.copyright a{
     font-size: 25px;
 }
 
+.addToCart h3{
+    margin-top: 1rem;
+}
+
 .btn{
     width: 25px;
     background-color: var(--primary);
@@ -478,6 +482,10 @@ footer.copyright a{
     font-weight: 600;
     cursor: pointer;
     transition: 0.5s;
+}
+
+.btn:hover{
+    background: var(--primary-hover);
 }
 
 .cartQty{

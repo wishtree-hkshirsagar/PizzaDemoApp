@@ -42,6 +42,8 @@ function publicController(){
 
         removeFromCart(req, res){
 
+            console.log('removeFromCart');
+
             if(!req.session.cart) {
                 return res.status(500).json({
                     message: 'Cart is empty'
@@ -60,6 +62,7 @@ function publicController(){
                     items: cart.items
                 });
             } else {
+                delete req.session.cart;
                 return res.status(500).json({
                     message: `You don't have ${req.body.title} pizza in your cart to remove`
                 })
@@ -96,12 +99,29 @@ function publicController(){
                     obj.push(obj1);
                     
                 }
+
+                return res.send(obj)
                 
-                return res.json({
-                    items: obj,
-                    totalQty: req.session.cart.totalQty,
-                    totalPrice: req.session.cart.totalPrice
-                });
+                // return res.json({
+                //     items: obj,
+                //     totalQty: req.session.cart.totalQty,
+                //     totalPrice: req.session.cart.totalPrice
+                // });
+            } else {
+                return res.status(404).json({
+                    message: 'Cart is empty'
+                })
+            }
+        },
+
+        getCartItemsCount(req, res){
+            let count = {};
+            if(req.session.cart){
+                count.totalQty = req.session.cart.totalQty;
+                return res.send(count);
+            } else {
+                count.totalQty = 0
+                return res.send(count);
             }
         },
 
